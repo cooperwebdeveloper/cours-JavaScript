@@ -1,0 +1,98 @@
+function squareNumber(){
+  return 10 * 5
+}
+
+let number = squareNumber()
+
+console.log(squareNumber())
+
+console.log('==================')
+
+console.log(number)
+console.log('*************************************')
+
+function sayHello(){
+  console.log(getHello())
+}
+function getHello(){
+  if (Math.random() > 0.5){
+    return 'Bonjour !'
+  } else {
+    return 'Bienvenue !'
+  }
+}
+
+sayHello()
+sayHello()
+sayHello()
+sayHello()
+sayHello()
+sayHello()
+sayHello()
+sayHello()
+sayHello()
+sayHello()
+sayHello()
+
+console.log('*****************')
+//Appliquer la notion
+
+// declarer une fonction qui retournera la valeur de la variable firstName.
+ const firstName = 'Julien';
+
+function getName(){
+  return firstName + ' Bonjour!';
+}
+
+console.log(getName())
+
+//*****************************************
+console.log('***************************************')
+//***********************************************
+//moyenne d'un eleve qui a eu trois notes
+function average(note1, note2, note3, name){
+  return (note1 + note2 + note3) / 3 + ' ' +name;
+}
+
+let avg = average(12, 3, 18, 'yohann')
+console.log('moyenne de l\'eleve: '  + avg);
+
+//*********************************
+console.log('***************************')
+//**************************************
+//    appliquer la notion
+
+// fonction qui retourne le volume d'UN PARALLELEPIPEDE
+
+function totalVolume(height, width, depth){
+  return height * width * depth;
+}
+
+const height = prompt('Hauteur du parallélépipède ');
+const width = prompt('Largeur du parallélépipède ');
+const depth = prompt('Profondeur du parallélépipède ');;
+
+const volume = totalVolume(height, width, depth);
+console.log('le volume du parellelepipede est = ' + volume)
+
+// REUSSI!
+// appliquer la notion les METHODES JS
+
+//ecrire une fonction qui qui prendra en argument un mot
+let word = prompt('quelle est votre nom?')
+function newWord(){
+  console.log(firstLetter(word) + restLetters(word))
+}
+
+function firstLetter(){
+  firstL = word.substring(0, 1);
+  return firstL.toUpperCase();
+}
+function restLetters(){
+  restL = word.substring(1);
+  return restL.toLowerCase();
+}
+
+newWord();
+
+

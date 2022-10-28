@@ -1,0 +1,20 @@
+Développeur sur un site de recettes de cuisine, on nous a donné la responsabilité de développer un message qui sera affiché à l'utilisateur quand il se connectera à son profil. Ce message est conditionné par les informations que l'utilisateur a saisies lors de son inscription.
+
+
+
+Lors de leur inscription, les utilisateurs ont saisi le formulaire suivant : voir html
+
+Le message affiché devra être sous la forme suivante :
+
+"Bonjour [civilité de l'utilisateur] [nom de l'utilisateur]. ["Inscrivez-vous vite à notre newsletter" / "Merci de vous être abonné à notre newsletter"], elle permettra de vous envoyer de délicieuses recettes de votre catégorie préférée, [catégorie culinaire préférée de l'utilisateur]!"
+
+Pour conditionner l'affichage de la civilité de l'utilisateur, nous utiliserons une condition ternaire sur la donnée civility du formulaire.
+
+Pour conditionner l'affichage du message "Inscrivez-vous vite à notre newsletter" ou "Merci de vous être abonné à notre newsletter", nous utiliserons une condition if...else sur la donnée newsletter du formulaire.
+
+Pour conditionner l'affichage de la catégorie préférée, nous utiliserons un switch sur la donnée category du formulaire, la valeur par défaut sera "Entrée froide".
+
+Le message sera affiché dans une alerte JavaScript :
+
+
+alert('Le message à afficher');

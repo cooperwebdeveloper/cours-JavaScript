@@ -1,0 +1,118 @@
+Ordre lexicographique :
+
+let a = 'aa'
+let b = 'ab'
+
+if (a > b) { //On verifie si 'aa' > 'ab'
+     console.log('vrai') 
+} else {
+    console.log('faux')
+}   //ici ca affiche faux
+
+
+//Droit de vote
+
+let age = 24;
+if (age >= 18) {
+    console.log('ok')
+} else {
+    console.log('trop jeune dsl!')
+}
+
+***************************************************************
+
+// la moyenne d'un etudiant est 12
+let userAverage = 12;
+
+const average = 10; // la moyenne
+
+
+
+const hasAverage = average >= 10
+
+// événement avoir la mention assez bien
+const prettyGood = average >= 12 && average < 14;
+console.log(prettyGood);
+
+// événement avoir la mention bien
+const good = average >= 14 && average < 16;
+console.log(good);
+
+// événement avoir la mention tres bien
+const veryGood= average >= 16;
+console.log(veryGood);
+
+// événement avoir la mention (2 possibilités)
+const mention = average >= 12;
+const mention2 = prettyGood  || good || veryGood;
+console.log(mention2);
+
+//******************************
+
+//Les operateurs logiques 
+
+&& //and
+|| //or 
+not //not
+
+//exemple:
+
+const number1 = 9;
+const number2 = 10;
+
+let result = number1 === 9 && number2 === 10;
+console.log(result) // true les 2 affirmations sont vraies
+
+result = number1 === 9 && number2 !== 10;
+//false seule la premiere affirmation est vraie
+
+result = number1 === 9 || number2 !== 10;
+//true car une des deux affirmations est vraie
+
+result = !(number1 === 9 && number2 === 10);
+// false car '!' retourne le contraire de ()
+
+//exemple:
+
+let neighborhood ='Port Marianne';
+let age = 46;
+let hasVoteLastYear = true;
+
+// "Truthy" - true - 1 - (!falsey)
+//"Falsey" - false - null - undefined - 0 - " "    
+
+if (age  >= 18 && neighborhood == 'Port Marianne' || !hasVoteLastYear ) {
+  //Le || est prioritaire par rapport au && (MDN)
+  // !hasVotedLastYear = hasVotedLastYear == false
+}
+
+**************************************************
+//appliquer la notion:
+
+//le client du restaurant doit etre muni d'un pass sanitaire ou d'un test pcr neg
+// doit aussi avoir reserve une table dans le restaurant
+let healthPass = 'Pass sanitaire'; 
+let pcrTest = 'Test Pcr Negatif'; 
+let booking = 'yes'; 
+
+let passTom = 'Pass sanitaire';
+let bookingTom = 'yes';
+
+let result = (passTom === (healthPass || pcrTest)) && booking === bookingTom;
+if (passTom === (healthPass || pcrTest)) {
+  let result = true;
+} else {
+  let result = false;
+}
+console.log(result); 
+
+*********************************
+// exercice appliquez la notion
+
+const averageStudy1 = 10;
+const averageStudy2 = 9;
+
+// Test d'egalite strict entre les deux moyennes retournant true ainsi quun test retournant false
+
+console.log(averageStudy1 !== averageStudy2); // true
+console.log(averageStudy1 === averageStudy2); // false

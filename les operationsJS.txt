@@ -1,0 +1,219 @@
+//les chaines de caractere
+
+let userFirstName = 'rOmAin';
+let userLastName = 'deLaNoix';
+
+console.log(userFirstName.substring(0, 1).toUpperCase() + userFirstName.substring(1).toLowerCase());
+console.log(userLastName.substring(0, 1).toUpperCase() + userLastName.substring(1).toLowerCase());
+
+//les operations
+
+let myNumber = 10;         //myNumber=10
+myNumber = myNumber * 3;  //myNumber=30
+myNumber = myNumber + 2;  //muNumber=32
+
+//que peut on deduire de la variable myNumber si:
+
+myNumber%2 = 0;     //que myNumber est un chiffre pair car si on divise par deux il ne reste rien (multiple de deux)
+
+
+// A combien est egale la variable myOtherVariable?
+
+let myVariable = 10;
+let myOtherVariable = myVariable++; 
+// myVariable = 11   myOytherVariable = 10                                          
+
+myOtherVariable--;   // myOtherVariable = 9
+
+
+// affectation simple:
+
+let variable1 = 5;
+let variable2 = 12;
+let variable3 = 50;
+
+variable1 = variable2 
+//  variable1 vaut maintenant 12
+
+
+variable1 = variable2 = variable3 
+// variable1 variable2 et variable3 valent maintenant 50
+
+
+//Affectation apres addition
+
+let variable1 = 10;
+let variable2 = 50;
+let variableString1 = "ma chaine de caracteres";
+const variableString2 = "ma deuxieme chaine de caracteres";
+const variableBool = true;
+
+variable1 += variable2; //nbre + nbre realise une addition --> 60
+
+variable2 += variableString1; 
+// nbre + chdecar --> 50machaine de caracteres
+
+variableString1 += variableBool; 
+// chdecar + bool --> concatenation --> ma chaine de caracterestrue
+
+variableString1 += variableString2;
+// chdecar+chdecar --> concatenation --> 
+//ma chaine de caracteresma deuxieme chaine de caracteres
+
+
+
+//affectation apres soustraction
+let variable1 = 10;
+let variable2 = 50;
+let variableString1 = "ma chaine de caracteres";
+
+variable1 -= variable2; // rst -40
+variable1 -= variableSring // NaN
+
+
+//Affectation apres division
+let numerateur = 10;
+let denominateur = 50;
+let variableString1 = "ma chaine de caracteres";
+
+numerateur /= denominateur; // numerateur vaudre 2 
+numerateur /= variableString1;   // numerateur vaudra NaN
+
+//affectation apres multiplication
+let variable1 = 10;
+let variable2 = 5;
+let variableString1 = "ma chaine de caracteres";
+
+variable1 *= variable2; // variable1 vaut 50
+variable1 *= variableString; // NaN
+
+//Affectation apres modulo%
+let variable1 = 78;
+const variable2 = 4;
+const variableString = "ma chaine de caracteres"
+
+variable1 %= variable2; // variable1 vaudra 2 
+vaeiable1 %= variableString; // NaN
+
+***********************************************************************************
+
+//appliquez la notion
+//quel sera le resultat de myVariable?
+
+let myVariable = 0;
+const number = 12;
+const myText = " ma première affectation";
+const mySecondNumber = 8;
+
+myVariable += number ; // 12
+myVariable -= mySecondNumber; // 4 
+myVariable += myText; //nbre + chdecar --> concatenation --> 4 ma premiere affectation
+
+
+***********************************************************************************
+
+//autoevaluation DEFI
+//Pierre, Jeanne est Paul jouent aux billes pendant la récréation.
+
+
+//Pierre a 10 billes, Jeanne en a 15 et Paul, 5.
+let billesPierre = 10;
+let billesJeanne = 15;
+let billesPaul = 5;
+
+//À chaque partie, le joueur gagnant prend la bille de ses adversaires.
+
+//Pierre gagne les deux premieres parties 
+billesPierre += 4;
+billesJeanne -= 2;
+billesPaul -= 2;
+
+//Jeanne gagne la troisieme
+//Paul la quatrième, et Jeanne la cinquième.
+
+//parties 3 et 5:
+billesJeanne += 4;
+billesPierre -= 2;
+billesPaul -= 2;
+//partie 4:
+billesPaul += 2;
+billesPierre--;
+billesJeanne--;
+
+//Jeremy arrive avec un sac plein de calots et propose à chacun d’échanger ses calots contre des billes, avec chacun un arrangement différent.
+//Pour Pierre, 1 calot = 4 billes.
+
+//Pour Jeanne, 1 calot = 2 billes.
+
+//Pour Paul, 1 calot = 3 billes.
+
+//Pierre, Paul et Jeanne décident d'échanger le maximum de billes avec Jeremy.
+
+//echange avec Pierre:
+const billesRestantesPierre = billesPierre % 4;
+const boulardsPierre = (billesPierre - billesRestantesPierre) / 4;
+
+console.log(billesRestantesPierre) // 3
+consloe.log(boulardsPierre) //2
+// l'échange avec Jeanne
+const billesRestantesjeanne = billesJeanne % 2;
+const boulardsjeanne = (billesJeanne - billesRestantesjeanne) / 2;
+console.log(billesRestantesjeanne); // 0
+console.log(boulardsjeanne); // 8
+// l'échange avec Paul
+const billesRestantesPaul = billesPaul % 3;
+const boulardsPaul = (billesPaul - billesRestantesPaul) / 3;
+console.log(billesRestantesPaul); // 0
+console.log(boulardsPaul); // 1
+
+***********************************************************************************
+
+//AUTOEVALUATION QUIZZ
+
+
+myVariable = '12';
+myVariable = +myVariable  // transforme ine variable en nombre
+
+// quel sera le resultat de la console?
+let myVariable = 10;
+myVariable++;
+myVariable= myVariable* 2;
+myVariable--;
+myVariable%= 3
+
+//le rst sera 0
+
+// Dans ce cas on peur affirmer que myNumber est impair:
+console.log(myNumber % 2 !== 0) // true
+
+
+// que retournera la console?
+const {type} = computer;
+const {color} = computer;
+const {size} = computer;
+console.log(typeof computer);
+// object
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
