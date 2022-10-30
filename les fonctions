@@ -96,3 +96,18 @@ function restLetters(){
 newWord();
 
 
+// Appliquer la notion la portee des variables 
+
+
+// faire que cela affiche zero en modifiant la portee de la variable 
+
+
+function count(){
+  let compteur = 0;
+  for (let i = 0; i < 10; i++){
+    let compteur = i; // cette valeur nest jamais lue car hors de portee 
+  }
+  console.log(compteur);
+}
+
+count()
