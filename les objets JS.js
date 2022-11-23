@@ -89,3 +89,41 @@ const regions = [
   }
   
   console.log(average)
+
+  //***************************************************************************/
+  //appliquer la notion declarer un objet
+
+  class Car {
+    constructor(type,color,doors,airConditionner){
+      this.type= type;
+      this.color= color;
+      this.doors= doors;
+      this.airConditionner= airConditionner;
+    }
+  }
+  let myCar = new Car ('Toyota', 'blue', 5, true)
+  // autre facon de declarer un objet :
+  // let Car = {
+  //  type: 'Toyota',
+  //  color: 'blue',
+  //  doors: 5,
+  //  airConditionner: true
+  //}
+
+
+  //*******destructuration et operateur spread */
+
+  
+let myArray= [1,2,3,4,5,6]
+			
+// code:
+const [,myNumber] = myArray
+			console.log(myNumber) // 2
+			
+// code:
+myArray.splice(0,4)
+			console.log(myArray) // [5,6]
+			
+// code:
+myArray = [myNumber, ...myArray]
+		console.log(myArray) // [2,5,6]

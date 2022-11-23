@@ -111,3 +111,21 @@ function count(){
 }
 
 count()
+//****************REALISATION DUN COMPTEUR
+
+function countDown(timeLeft) {
+  console.log(timeLeft); //affiche le chiffre en cours 
+  timeLeft--; // decremente de 1 le chiffre en cours
+
+  if (timeLeft > 0){
+    return countDown(timeLeft); // si le chiffre en cours est superieur a 0 on retourne a nouveau la fonction
+  }
+
+  // si le chiffre en cours = 0
+  console.log('Le repas est pret!');
+  return true; // pour sortir de la fonction, sans valeur
+
+}
+
+// test:
+countDown(10)
