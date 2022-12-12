@@ -1,0 +1,490 @@
+***les dates en js***
+
+********l'objet Date()*********
+
+const date = new Date() affiche la date du jour sur la console si aucun parametre n'est renseigne
+parametres pouvant etre renseignes = 
+on peut mettre une chaine de caracteres pour specifier la date du jour mais ce n'est pas recomande (incompatibilite)
+- annee = obligatoire, un entier representant l'annee si on met de 0 a 99 cela correspond aux annees 1900 et 1999
+- mois = obligatoire,  un entier allant de 0 (janvier) a 11(decembre)
+- jour = facultatif, le jour du mois sous forme d'entier 
+- heures =  facultatif, l'heure du jour de 0 a 23 
+- minutes = facultatif
+- secondes et millisecondes = facultatif
+
+si jamais on veut qd meme utiliser les chaines de caractere on doit bien faire attention de bien utiliser les parametres 
+cites ci dessus 
+
+const date = new Date(2020,1,25) 
+console.log(date) // affichera Tue Feb 25 2020 00:00:00 GMT+0100 
+
+TIMESTAMP = en convertissant une date en timestamp on peut plus facilement faire des comparaisons de
+dates, des tris, etc car il s'agira toujours d'une comparaison de nombres entiers. Le debut est toujours
+le 1er janvier 1970 a minuit
+
+a retenir =
+pour construire et utiliser les dates on utilise l'objet Date()
+si on ne lui passe aucun parametre il retourne la date courante 
+en parametres il ne faut pas utiliser les chaines de caractere mais utiliser les parametres annee mois ...
+
+les mois vont de 0 (janvier) a 11 (decembre)
+
+***LES SETTERS ET LES GETTERS***
+
+les setters = construire une date en definissant les minutes les secondes etc...
+les getters = recuperer ses donnees jour du mois de la semaine etc...
+
+setFullYear(): Prens en parametre une entier indiquant l'annee et eventuellement un entier pour le mois (de 0 a 11) et 
+un entier pour le jour  (1 a 31)
+
+setMonth(): prend en parametre un entier definissant le mois de 0 a 11 et eventuellement un entier pour le jour
+
+setDate(): prend en parametre un entier definissant le jour. Si la valeur passee est 0 alors la date passee sera le dernier jour 
+du mois precedent. Si la valeur passee est negative la date sera definie sur les N jours a partir du dernier jour du 
+mois precedent. EX : -10 signifie 10 jours avant le dernier jour du mois precedent.
+
+const date = new Date()
+
+date.setFullYear(2020)
+date.setMonth(11)
+date.setDate(31)
+
+console.log(date)
+// Thu Dec 31 2020 09:29:10 GMT+0100 (heure normale d’Europe centrale)
+
+setHours(): prend en parametre un entier definissant l'heure (0 a 23) et peut aussi prendre en parametres facultatifs
+les minutes secondes et millisec
+
+setMinutes(): param entier definissant les minutes (0 a 59) param facultatifs sec et ms
+
+setSeconds(): param entier pr les sec (0 a 59) param fac les ms
+
+setMilliseconds(): de 0 a 999
+
+const date = new Date(2020, 1, 29)
+
+date.setHours(22)
+date.setMinutes(30)
+date.setSeconds(45)
+date.setMilliseconds(500)
+
+console.log(date)
+// Sat Feb 29 2020 22:30:45 GMT+0100 (heure normale d’Europe centrale)
+
+setTime() = param est le timestamp de la date desiree 
+
+const date = new Date()
+		// Le nombre 1572303600000 correspond au nombre de millisecondes écoulées entre le 1er janvier 1970 à minuit et le 29 octobre 2019 à minuit
+		date.setTime(1572303600000)		
+ 
+		console.log(date)
+		// Tue Oct 29 2019 00:00:00 GMT+0100 (heure normale d’Europe centrale)
+
+
+getFullYear() getMonth() getDate() :
+
+Ces methodes permettent de retourner respectivement  l'annee complete le mois ou le jour d'une date donnee 
+En fonction de la donnee dont nous avons besoin ou de l'affichage que nous voulons en faire nous pouvons donc choisir 
+avec precision celle qui nous interesse sans avoir a faire de manipulations complexes
+
+const date = new Date(2020, 1, 29)
+
+console.log(date.getFullYear()) // 2020
+console.log(date.getMonth()) // 1
+console.log(date.getDate()) // 29
+
+
+getHours() getMinutes() getSeconds() getMilliseconds() :
+
+Retournent l'heure les minutes les sec et les millisecondes d'une date donnee
+
+const date = new Date(2020, 1, 29, 22, 30, 45, 500)
+
+console.log(date.getHours()) // 22
+console.log(date.getMinutes()) // 30
+console.log(date.getSeconds()) // 45
+console.log(date.getMilliseconds()) // 500
+
+getDay() = renvoie le jour de la semaine de la date donnee. Retourne un entier de 0 a 6  avec 0 pour dimanche et 6 pour
+samedi
+
+const date = new Date(2020, 1, 29)
+console.log(date.getDay()) // 6
+
+getTime() = renvoie le timestamp de la date donnee. Cette methode peut etre utilisee pour affecter une nouvelle date a une date existante avec setTime()
+
+const date = new Date(2020, 1, 29)
+
+console.log(date.getTime()) // 1582930800000
+
+Date.Now() renvoie le timestamp actuel
+
+const date = Date.now()
+
+console.log(date) // 1583751043304
+
+A RETENIR:
+
+setFullYear(), setMonth(), setDate() : affecte l'année, le mois ou le jour à une date.
+
+setHours(), setMinutes(), setSeconds(), setMilliseconds() : affecte les heures, minutes, secondes ou millisecondes à une date.
+
+setTime() : affecte une date à partir d'un timestamp.
+
+getFullYear(), getMonth(), getDate() : récupère l'année, le mois ou le jour d'une date donnée.
+
+getHours(), getMinutes(), getSeconds(), getMilliseconds() : récupère l'heure, les minutes, secondes ou millisecondes d'une date donnée.
+
+getDay() : récupère le jour de la semaine d'une date donnée (0 dimanche à 6 samedi).
+
+getTime() : récupère le timestamp d'une date donnée.
+
+Date.now() : récupère le timestamp actuel.
+
+VIDEO: 
+on peut faire des operations sur les dates
+
+const choresDeadline =  new Date(2020, 0, 15, 14, 00, 00)
+
+choresDeadline.setDate(choresDeadline.getDate() + 1);
+
+console.log(choresDeadline); // 16 janvier 2020
+
+
+/*setters et getters appliquez la notion*/
+
+// a partir de la date du 25 dec 2020 :
+// 1  afficher son timestamp
+// 2  afficher le mois 
+// 3  lui affecter l'heure 20h30 et afficher la date dans la console
+
+// 1
+const creationDate = new Date(2020, 11, 25)
+
+console.log(creationDate.getTime())
+
+// 2
+
+console.log(creationDate.getMonth())
+
+// 3
+
+creationDate.setHours(20, 30)
+
+console.log(creationDate)
+
+
+/**************************Les manipulations de dates****************************/
+
+grace aux differents getters on peut recuperer des donnees d'une date et grace aux setters on peut lui en affecter 
+comme les annees mois jours etc sont des entiers on peut facilement effectuer des operations mathematiques 
+
+const date = new Date(2020, 1, 29)
+const date2 = new Date()
+
+date2.setFullYear(date.getFullYear() + 1)
+date2.setMonth(date.getMonth() + 6)
+date2.setDate(date.getDate() + 15)
+
+console.log(date2.toString())
+// Mon Sep 13 2021 16:16:41 GMT+0200 (heure d’été d’Europe centrale)
+
+manipulation des heures minutes et secondes =
+
+const date = new Date(2020, 1, 29, 21, 30, 55)
+const date2 = new Date()
+
+date2.setFullYear(date.getFullYear())
+date2.setMonth(date.getMonth())
+date2.setDate(date.getDate())
+
+date2.setHours(date.getHours() + 4)
+date2.setMinutes(date.getMinutes() + 30)
+date2.setSeconds(date.getSeconds() + 30)
+
+console.log(date2)
+// Sun Mar 01 2020 02:01:25 GMT+0100 (heure normale d’Europe centrale)
+
+Methode: 
+Il existe un moyen de changer plusieurs parametres d'une date en une seule ligne 
+
+// Example 2
+const date = new Date(2020, 1, 29, 20, 30, 45)
+
+const date2 = new Date(
+  date.getFullYear() + 1,
+  date.getMonth() + 6,
+  date.getDate() + 15,
+  date.getHours() + 4,
+  date.getMinutes() + 30,
+  date.getSeconds() + 30
+)
+
+console.log(date2)
+// Tue Sep 14 2021 01:01:15 GMT+0200 (heure d’été d’Europe centrale)
+
+manipulations avec timestamp = 
+Imaginons trois daters que nous voulons comparer, nous allons recuperer et comparer les timestamp de ces dates 
+Ainsi pour les trier par exemple on sait que la plus grande est la plus recente 
+
+A RETENIR 	=
+
+avec getters nous pouvons recuperer les donnees necessaires pour faire des calculs 
+avec les setters nous pouvons construire des dates avec ces nouvelles donnees calculees en js
+grace aux timestamps nous pouvons comparer et trier plus facilement les dates 
+
+VIDEO:
+
+const origin  = new Date(2011, 6, 10, 14, 00, 00) //attention ici le nbre 6 correspond a juillet 
+
+console.log(origin) // affiche 2011-07-10T14:00:00
+
+const result = new Date(
+	origin.getFullYear() + 1,
+	origin.getMonth() + 6,
+	origin.getDate() - 2
+);
+
+console.log(result) // affiche 2013-01-07T14:00:00
+
+const originTimestamp  = origin.getTime();
+const resultTimestamp = result.getTime();
+
+console.log(origin.Timestamp < resultTimestamp)  //renvoie true car la date origin est plus ancienne que la date result
+
+**********appliquez la notion:
+
+À partir de la date du 25 décembre 2020 à 20 h 30, nous voulons calculer une nouvelle date qui sera dans 5 ans, 6 mois et 12 heures de plus (vous devez effectuer des calculs en JavaScript) et l'afficher dans la console.
+
+const dateOf = new Date(2020, 11, 25, 20, 30);
+
+console.log(dateOf);
+
+const newDateOf = new Date(
+  dateOf.getFullYear() + 5,
+  dateOf.getMonth() + 6,
+  dateOf.getDate(),
+  dateOf.getHours() +12,
+  date.getMinutes()
+);
+
+console.log(newDateOf)
+
+/*autre methode */
+
+const date = new Date(2020, 11, 25, 20, 30)
+const date2 = date
+date2.setFullYear(
+  date.getFullYear() + 5,
+  date.getMonth() + 6
+)
+date2.setHours(date.getHours() + 12)
+// Display : Fri Jun 26 2026 08:30:00 GMT+0200 (heure d'été d'Europe centrale)
+console.log(date2)
+
+
+/**********************FORMATER LES DATES***********************/
+
+-------> toLocalString()
+
+retourne une chaine de caracteres qui correspond a une date donnee selon une locale.
+Elle prend deux parametres facultatifs=
+
+Locales : une chaine d caracteres de localisation fr-FR pour la france par exemple ou un tableau de ces chaines de caracteres, si ce parametre n'est pas precise c'est la locale par defaut du navigateur qui sera utilisee
+
+Options : un objet contenant toutes ou certaines proprietes que nous allons pas detailler ici mais qui permettent par exemple de definir le fuseau horaire, le format 12 heures, la representation de l'annee  du mois etc...
+
+const date = new Date(2020, 1, 29, 21, 30, 45)
+
+const dateDisplayed = date.toLocaleString('fr-FR')
+
+const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' }
+const dateDisplayedLong = date.toLocaleString('fr-FR', options)
+
+console.log(dateDisplayed) // 29/02/2020, 21:30:45
+console.log(dateDisplayedLong) // samedi 29 février 2020, 21:30
+
+----------> toLocaleDateString()
+
+Cette methode est similaire a la premiere sauf qu'elle retourne la date (jour, mois, annee ) sans l'heure 
+toutefois les parametres dans l'objet options permettent quand meme de tout afficher si on le souhaite 
+
+const date = new Date(2020, 1, 29, 21, 30, 45)
+
+const dateDisplayed = date.toLocaleDateString('fr-FR')
+
+const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }
+const dateDisplayedLong = date.toLocaleDateString('fr-FR', options)
+
+console.log(dateDisplayed) // 29/02/2020
+console.log(dateDisplayedLong) // samedi 29 février 2020
+
+------------> toLocaleTimeStrimg()
+Cette methode est similaire a la premiere sauf qu'elle retourne directement l'heure de la date 
+Toutes fois les parametres dans l'objet options permettent quand meme de tout afficher si on le souhaite 
+
+const date = new Date(2020, 1, 29, 21, 30, 45)
+
+const dateDisplayed = date.toLocaleTimeString('fr-FR')
+
+console.log(dateDisplayed)// 21:30:45
+
+------------->  Intl.DateTimeFormat
+
+il s'agit d'une autre facon de formater les dates qu'il est preferable d'utiliser pour des raisons de performances si nous devons en formater un grand nombre.
+
+il faut alors creer un objet Intl.DateTimeFormat et utiliser sa propriete format en lui passant la date. Cet objet prend en parametres facultatifs locales et options
+
+const date = new Date(2020, 1, 29, 21, 30, 45)
+
+const dateDisplayed = new Intl.DateTimeFormat('fr-FR').format(date)  /|\ne pas oublier de preciser la date concernee dans le format()
+
+const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' }
+const dateDisplayedLong = new Intl.DateTimeFormat('fr-FR', options).format(date)
+
+console.log(dateDisplayed) // 29/02/2020
+console.log(dateDisplayedLong) // samedi 29 février 2020, 21:30
+
+********A RETENIR************
+toLocaleString(): renvoie une chaine de caracteres representant la date selon une locale (ex fr-FR) par defaut la locale du navigateur
+toLocaleDateString(): renvoie une chaine de caracteres representant la date (jour mois annee selon une locale)
+toLocaleTimeString(): renvoie une chaine de caracteres representant l'heure de la date selon une locale 
+Intl.DateTimeFormat(): objet permettant de formatter les dates a utiliser en cas de nombreuses dates a formater 
+
+appliquez la notion:
+
+a partir de la date du 25 decembre 2020 nous voulons :
+1/ afficher la date dans la console au format jj/mm/aaaa
+
+const date = new Date(2020, 11, 25, 20, 30)
+const dateDisplayed = date.toLocaleDateString('fr-FR')
+
+const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }
+const dateDisplayedLong = date.toLocaleString('fr-FR', options)
+
+// 1) Display : 25/12/2020
+console.log(dateDisplayed)
+
+// 2) Display : vendredi 25 décembre 2020
+console.log(dateDisplayedLong)
+
+ou avec le Intl.DateTimeFormat:
+
+const date = new Date(2020, 11, 25, 20, 30)
+const dateDisplayed = new Intl.DateTimeFormat('fr-FR').format(date)
+
+const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }
+const dateDisplayedLong = new Intl.DateTimeFormat('fr-FR', options).format(date)
+
+// 1) Display : 25/12/2020
+console.log(dateDisplayed)
+
+// 2) Display : vendredi 25 décembre 2020
+console.log(dateDisplayedLong)
+
+
+/****Days.js*****/
+c'est une librairie specialisee dans la gestion des dates
+
+on peut integrer la librairie avec un lien cdn ou en la telechargeant
+
+---> installation en CDN : Il faudra integrer les liens cdn avant notre propre script et avant la balise fermante du </body>
+---> installation en telechargement : 
+  1/ aller sur le site jsdelivr.com34 et cliquer sur le lien daysjs.min.js
+  2/ copier coller le code dans un fichier javascript que nous integrerons au projet
+  3/ lier ce fichier cree dans le html avec une balise script  
+
+  let date = dayjs('10-09-2021 10:30:04')
+
+console.log(date.format()) // Display : 2021-10-09T00:00:00+02:00
+console.log(date.format('dddd D MMMM YYYY')) // Display : Saturday 9 October 2021
+console.log(date.year()) // Display : 2021
+console.log(date.month()) // Display : 9
+console.log(date.day()) // Display : 6 (ce qui correspond au 7ème jour avec une semaine qui commence le dimanche pour une valeur à 0)
+console.log(date.hour()) // Display : 10
+console.log(date.minute()) // Display : 30
+console.log(date.second()) // Display : 4
+
+console.log(date.add(7, 'day').format('le DD/MM/YYYY à hh:mm:ss')) // Display : le 16/10/2021 à 10:30:04
+console.log(date.subtract(7, 'year').format('le DD/MM/YYYY à hh:mm:ss')) // Display : le 09/10/2014 à 10:30:04
+
+console.log(date.startOf('year').format('le DD/MM/YYYY')) // Display : le 01/01/2021
+console.log(date.endOf('month').format('le DD/MM/YYYY')) // Display : le 31/10/2021...
+
+/******APPLIQUEZ LA NOTION********/
+
+Nous souhaitons écrire un script capable de comparer la date d'une commande en ligne avec une période de promotion pour savoir si la commande bénéficie de la remise.
+
+La commande a été passée le 22 décembre 2019 à 10:45.
+
+La promotion a débuté le 18 décembre 2019 à 18:00 et dure 10 jours.
+
+-----> Indice
+Lors du calcul de la date de fin de promotion, add() mute la variable d'origine, effectuez le add() sur une copie réalisée avec moment().clone().
+
+La fonction à utiliser pour savoir si une date est entre deux dates est isBetween().
+ 1/ Creation des variables: 
+ const orderedAt = moment('2019-12-22 10:45'); //creation avec moment() de la date de la commande 
+ const specialOfferStart = moment('2019-12-18 18:00'); // creation de la date de debut des promos
+ const specialOfferEnd = specialOfferStart.clone().add(10, 'days'); // creation de la date de fin des promos avec clone() qui reprend 
+                                                                    la date de depart puis avec add( ) on ajoute les 10 jours
+ const hasReducedPrice = orderedAt.isBetween(specialOfferStart, specialOfferEnd); 
+ //ci dessus on cree une constante qui verifie si la date de commande est dans la periode des promos grace a isBetween()
+
+ 2/creation de la condition qui va verifier si la date de la commande est comprise dans la periode de promo:
+
+ if (hasReducedPrice) { // si la constante hasReducedPrice est true
+  console.log('la commande beneficie du tarif reduit!')
+ } else {   //si la const hasReducedPrice est false
+  console.log('la commande a ete passee en dehors de la periode promotionnelle')
+ }
+
+ /**********A RETENIR**********/
+
+ Pour utiliser l'objet date() il faut lui assigner en parametre la date si on ne met rien c'est la date du jour
+ Pour comparer et trier et comparer les dates il faut utiliser le format TIMESTAMP
+ pour manipuler les dates on peut utiliser la librairie Days.js 
+
+ /***************DEFI DATES****************/
+
+/*Dans cet exercice, nous voulons gérer les dates des Jeux Olympiques d'été de 2028 à Los Angeles, qui commenceront le 21 juillet 2028 et qui dureront 16 jours. Nous voulons donc afficher toutes les informations utiles concernant cet événement, comme la date de la cérémonie d'ouverture (date de début ), la date de la cérémonie de clôture (date de fin), ainsi que le nombre de jours restants entre la date actuelle et la date de début de l'événement.*/
+
+/*Il nous faut donc :
+
+1/Créer la date initiale (dateStart).
+
+2/Calculer et créer la date de fin (dateEnd).
+
+3/Afficher dateStart et dateEnd au format long (ex : samedi 29 février 2020) dans la console.
+
+4/Créer la date courante currentDate et calculer la différence (result) avec la date de début, puis convertir cette différence en nombre de jours.
+
+5/Afficher la date courante au format long (ex : samedi 29 février 2020) dans la console et afficher le nombre de jours de différence dans la console.*/
+
+//1/
+const olympicGameStart = new Date('2028, 7, 21')
+
+//2/
+const olympicGameEnd = new Date(
+  olympicGameStart.getFullYear(),
+  olympicGameStart.getMonth(),
+  olympicGameStart.getDate() + 16
+)
+
+//3/
+
+const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }
+
+
+console.log(olympicGameStart.toLocaleString('fr-FR', options))
+console.log(olympicGameEnd.toLocaleString('fr-FR', options))
+
+//4/ 
+const currentDate = new Date()
+const result = currentDate.getTime() - olympicGameStart.getTime()
+const days = const result /60/60/24
+//5 
+//Display : vendredi 21 juillet 2028
+console.log(currentDate.toLocaleString('fr-FR', options))
+// Display : 2449.252169814815
+console.log(days)
