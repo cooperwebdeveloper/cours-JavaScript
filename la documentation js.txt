@@ -1,0 +1,55 @@
+***********LA DOCUMENTATION JAVASCRIPT***********
+JS est basé sur un langage de scripts : ECMAScript. Ce langage evolue au rythme des publications des normes ECMA-262 et ECMA-402 de l'entreprise ECMA International. 
+
+ECMAScript 2015 est la sixieme evolution majeure de ECMAScript (ES6)
+rythme des publications = annuel
+
+on appelle la derniere version ES6+ 
+
+faire les recherches sur le mdn en anglais car les resultats sont plus riches et plus recents
+
+/*********appliquez la notion********/
+
+rechercher le nom de la fonction qui permet de filtrer le contenu d'un tableau
+array.prototype.filter() 
+
+pour la fonction que vous venez d'identifier indiquez quels seront ses parametres d'entree obligatoires ainsi que sa valeur de retour
+
+en entree il est necessaire  de fournir une fonction de callback qui permettra d'indiquer quel filtre doit etre applique au tableau
+
+la fonction renvoie un tableau contenant les elements qui respectent la condition du filtre 
+
+si aucun element le respecte la condition la fonction renvoie: un tableau vide 
+
+Au moyen de la fonction que vous venez d'identifier, supprimez tous les éléments du tableau ci-dessous dont la valeur est strictement supérieure à 100. La valeur est donc inférieure ou égale à 100, affichez les nombres dans la console.
+
+Certains éléments de ce tableau contiennent des chaînes de caractères, vous devrez convertir ceux-ci en entiers lorsque vous effectuerez votre comparaison. Aidez-vous de la documentation au besoin.
+
+let numbers = [98, 100, 102, 500, 10, '97', 'bonjour']
+
+Indice
+Essayez d'effectuer une recherche avec les mots-clés "string to int".
+
+Solution
+On utilisera ici la fonction parseInt.
+console.log(numbers.filter(number => parseInt(number) <= 100))
+
+// [ 98, 100, 10, '97' ]
+
+*****************verifier et gerer la compatibilite *****************
+
+il est important de verifier que les fonctionnalites et les API soient compatibles avec tous les navigateurs
+le meilleur moyen de verifier la compatibilite est le site CanIUse.comparaison
+
+le Polyfill est un morceau de code ecrit la plus part du temps en javascript qui permet de fournir des fonctionnalites recentes sur des navigateurs plus anciens qui ne les supportent pas de maniere native.
+
+BabelJs = outil capable d'ecrire le polyfill qui permettra surement la compatibilite. On pourra tester les polyfills proposes directement en ligne ou referencer le transpileur Javascript dans nos projets pour convertir ES6 en ES5
+
+*************Autres sources de connaissances******************
+
+stackOverflow meilleur forum pour l'informatique et le developpement se fier aux notes elevees 
+
+plateformes de ProofOfConcept = tester un bout de code en dehors du projet en cours. exemple: CodePen = test de code dediee au front end 
+autre plateforme du meme type = JSFiddle 
+
+
