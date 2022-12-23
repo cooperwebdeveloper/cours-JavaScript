@@ -1,0 +1,605 @@
+*******valeurs primitives vs objets = 
+
+en JS il existe deux grandes familles de type de donnees: les primitives et les objets.
+
+Rappel: Assignation d'une variable: Lorsqu'on assigne une valeur a une variable on enregistre quelque part en memoire cette donnee et on l'attache a la variable. Quand on decide d'afficher le contenu d'une variable, JS va chercher la valeur stockee dans l'emplacement memoire et va l'afficher. Les valeurs orphelines sont automatiquement supprimees grace a un mecanisme s'appelant garbage collector; Dans d'autres langages comme le C il faudra supprimer les valeurs de la memoire manuellement lorsqu'elles ne sont plus utilisees.
+
+* Les donnees primitives: -string -number -boolean -null -undefined
+    Tous ces types de donnees sont consideres comme immuables
+    c'est a dire qu'a chaque fois qu'une valeur d'une variable contenant l'un de ces types est modifiee, une nouvelle valeur lui est declaree en memoire et l'ancienne est supprimee.
+
+* Parmi les objets on retrouve par exemple les types:
+    -array  -object  -function
+    les objets sont consideres comme mutables, lorsqu'on modifie un de ces types de donnees ils ne sont pas entierement supprimes et recrees. On modifie simplement la valeur stockee dans la memoire.
+
+
+******* Copie vs Reference = 
+
+Selon le type de donnees manipulees le type d'affectation n'est pas le meme. La ou dans d'autres langages de programmation il est possible de definir si une variable est assignee par copie ou par reference, en JS c'est impossible, cela depend du type de donnees utilisees.
+
+    *Copie
+    L'assignation par copie est utilisee lsqu'on manipule des primitives. Ces types etant immuables, il est impossible de les modifier. De ce fait JS est oblige de les recreer.
+
+    ex:    
+        let username = 'John'
+        let adminUsername = username
+        username = 'Jane'
+
+        console.log(username) // Affiche Jane
+        console.log(adminUsername) // Affiche John
+
+    La consequence de l'assignation par copie est qu'une valeur de l'autre variable (username) n'impacte pas la valeur de l'autre variable (adminUsername), meme si l'une des variables est assignee a l'autre. Nous avons deux valeurs distinctes en memoire.   
+
+    *Reference
+    L'assignation par reference a lieu lorsqu'on manipule des objets. Ces types etant mutables, on peut les reutiliser pour les modifier. 
+    JS n'a pas besoin de les recreer.
+
+    ex:
+        let user = { name: 'John', age: 25 }
+        let adminUser = user
+        user.name = 'Jane'
+
+        console.log(user) // Affiche {name: "Jane", age: 25}
+        console.log(adminUser) // Affiche {name: "Jane", age: 25}
+
+    Les deux variables contiennent la meme valeur. En effet, chacune des variables fait reference au meme emplacement memoire ou est stockee l'objet.
+    De ce fait lorsqu'on pense modifie l'une des variables, c'est en fait l'emplacement memoire partagé entre les deux que l'on modifie. La valeur des deux variables est donc modifiee.
+
+    *******A retenir  =
+
+            * Il existe deux grandes familles de types de donnees: les primitives et les objets.
+            
+            * Lsqu'on assigne une valeur par copie, la modification de la valeur de l'une des variable n'entraine pas la modification de l'autre. Elle concerne les valeurs primitives (texte, nombre, booleen, etc).
+            
+            * Lorsqu'on assigne une valeur par reference, la modification de l'autre, puisqu'elles partagent la meme reference en memoire. L'assignation par reference concerne les objets (objet, tableau, fonction, etc...).
+
+
+***VIDEO=
+
+-> L'utilisation de const va nous permettre de ne pas reassigner une nouvelle valeur a une variable
+-> En gros quand on reassigne une valeur a une variable primitive, la seule donne qui est modifiee est la valeur de cette meme variable. Si avant cette modification nous avions assigne par copie la valeur de cette variable a une autre variable, la valeur de la deuxieme variable reste celle qui lui a ete assignee. A contrario, lsq on reaffecte une valeur a une donnee d'un objet, toutes les autres variables qui avaient ete affectees par la valeur de cet objet se retrouvent elles aussi modifiees ---> ASSIGNATION PAR REFERENCE.
+
+
+*********AVANTAGES ET INCONVENIENTS DE COPIE ET REFERENCE**********
+
+*****Assignation par copie :
+
+lsq nous assignons  une variable par copie, sa valeur est dupliquee. Ainsi la nouvelle variable possede une version independante de cette valeur, qui peut etre modifiee et qui n'impactera pas la valeur de l'autre.
+
+ex:
+    let username = 'John'
+    let adminUsername = username
+    username = 'Jane'
+
+    console.log(username) // Affiche Jane
+    console.log(adminUsername) // Affiche John
+
++ Avantage : le fait de rendre independante la valeur des deux variables
+- Inconvenient est que JS utilise plus de memoire puisque pour deux variables contenant la meme primitive nous aurons deux emplacements memoires distincts correspondants.
+
+
+******Assignation par reference:
+
+lsque nous assignons une valeur par preference sa valeur est reutilisee. Ainsi la nouvelle variable et l'ancienne font reference a la meme valeur (le meme emplacement en memoire) et la modification de l'une entraine la modification de l'autre.
+
+ex:
+        let user = { name: 'John', age: 25 }
+        let adminUser = user
+        user.name = 'Jane'
+
+        console.log(user) // Affiche {name: "Jane", age: 25}
+        console.log(adminUser) // Affiche {name: "Jane", age: 25}
+
+
++ l'avantage avec l'affectation par reference est que plusieurs variables peuvent pointer vers la meme valeur. C'est important lsque nous voulons gerer le mise a jour d'un objet a plusieurs endroits d'une application, par exemple une utiliateur dont nous voudrions mettre a jour le nom. 
+- L'inconvenient est que dans le cas ou nous voulons traiter plusieurs variables independamment l'une de l'autre nous ne pourrons pas le faire si elles font reference a la meme valeur en memoire. On pourra meme avoir des comportements inattendus si nous n'avions pas prevu en amont qu'un objet modifie puisse impacter le contenu d'une autre variable.
+
+ex:
+    let defaultUser = { name: '', age: 0 }
+
+    let userJane = defaultUser
+    userJane.name = 'Jane'
+    userJane.age = 20
+
+    let userJohn = defaultUser
+    userJohn.name = 'John'
+    userJohn.age = 25
+
+    console.log(userJane) // Affiche {name: "John", age: 25}
+    console.log(userJohn) // Affiche {name: "John", age: 25}
+
+
+Ici nous pensons creer deux objets distincts. Or au final nous modifions la meme valeur en memoire, puisque l'affectation d'un objet se fait par la reference. La valeur de la variable userJane est donc totalement fausse.
+
+
+***** A RETENIR
+
+l'avantage de l'assignation par copie est que nous travaillons sur des valeurs distinctes et que la modification de l'une n'entraine pas la modification de l'autre. Mais cela utilise plus de memoire car ces valeurs on besoin d'etre stockees plusieurs fois.
+
+A l'inverse, l'avantage de l'assignation par reference est que nous n'allons pas utiliser qu'un seul emplacement en memoire pour stocker la valeur, et nous pouvons gerer l'integrite de la valeur puisque si elle est modifiee  a un endroit  de notre code la modification sera repercutee partout ou on utilisera la meme reference. De la meme maniere il peut arriver que la modification d'une variable puisse impacter la valeur d'une autre variable, alors que nous ne l'avions pas prevu.
+
+**********  SHALLOW COPY   **************
+
+Quand on veut copier un objet pour le modifier sans que cela n'impacte l'objet copié ---> Cela revient a utiliser une assignation par copie au lieu d'une assignation par reference. Or en JS on ne peut pas, il va falloir proceder au clonage de l'objet. La methode la plus simple de cloner un objet est la methode shallow copy.
+On va creer un nouvel objet dont les valeurs ne seront pas liees aux valeurs de l'objet copié.
+
+***** Les differentes methodes de shallow copy:
+
+* Operateur spread:
+    on l'ecrit: "..."
+
+
+    ex:
+        let users = ['Nicolas', 'Romain']
+        let adminUsers = [...users]
+
+        users.push('Laure')
+
+        console.log(users) // Affiche ["Nicolas", "Romain", "Laure"]
+        console.log(adminUsers) // Affiche ["Nicolas", "Romain"] 
+
+    Nous pouvons maintenant gerer independament l'ajout d'utilisateurs a notre variable users sans qu'ils ne soient ajoutes a la variable adminUsers
+
+* Methode .slice():
+
+    Cette methode permet la creation d'un nouveau tableau qui est ensuite assigné a la variable adminUsers
+
+    ex: 
+        let users = ['Nicolas', 'Romain']
+        let adminUsers = users.slice()
+
+        users.push('Laure')
+
+        console.log(users) // Affiche ["Nicolas", "Romain", "Laure"]
+        console.log(adminUsers) // Affiche ["Nicolas", "Romain"]
+
+* Methode Object.assign():
+
+    Cette methode peut etre aussi utilisee  pour creer une nouvelle copie d'un objet (ici un tableau:)
+    ex: 
+        let users = ['Nicolas', 'Romain']
+        let adminUsers = []
+        Object.assign(adminUsers, users)
+
+        users.push('Laure')
+
+        console.log(users) // Affiche ["Nicolas", "Romain", "Laure"]
+        console.log(adminUsers) // Affiche ["Nicolas", "Romain"] 
+
+* Methode Array.from():
+La methode from() de l'objet Array permet aussi de creer une copie d'un tableau
+    ex:
+        let users = ['Nicolas', 'Romain']
+        let adminUsers = Array.from(users)
+
+        users.push('Laure')
+
+        console.log(users) // Affiche ["Nicolas", "Romain", "Laure"]
+        console.log(adminUsers) // Affiche ["Nicolas", "Romain"]
+
+
+********* Limitations :     ////[pas tres clair ~~~~]
+
+La shallow copy permet de copier les valeurs primitives d'un objet mais seulement de son premier niveau. Si d'autres objet sont inclus dans celui ci des references seront creees
+
+let users = [['Nicolas'], ['Romain'], ['Laure']]
+let adminUsers = Array.from(users)
+
+users[0][0] = 'Pirate'
+
+console.log(users) // Affiche [["Pirate"], ["Romain"], ["Laure"]]
+console.log(adminUsers) // Affiche [["Pirate"], ["Romain"], ["Laure"]]
+
+Ici le tableau users est copié dans un nouvel emplacement memoire et assigné a adminUsers, mais ses trois valeurs font reference aux memes valeurs que l'objet users.
+
+***** QUELLE METHODE UTILISER? ****
+(En informatique, un benchmark est un banc d'essai permettant de mesurer les performances d'un système pour le comparer à d'autres. Ici c'est le nombre d'operations par seconde)
+En utilisant un benchmark, la methode .slice() est plus rapide que les autres mais sa syntaxe peut porter a confusion a la lecture du code.
+
+A l'inverse les syntaxes avec l'operateur spread ou array.from() peuvent paraitre plus intuitives mais leurs performances sont inferieures.
+
+La methode Object.assign() est cependant a bannir pour la manipulation de tableaux tant au niveau des performances que de la syntaxe mais reste utile dans le cadre de la manipulation d'objets.
+
+Cela reste donc a notre appreciation selon si l'on prefere privilegier la performance ou la lisibilite de notre code.
+
+****** A RETENIR *******
+
+* La shallow copy permet de copier les valeurs primitives d'un objet ce qui permet de pouvoir manipuler deux valeurs distinctes pour contourner les inconvenients de l'assignation par reference pour des valeurs de type objet (objects, tableaux, fonctions etc...)
+
+* Cependant cette operation ne fonctionne que pour les valeurs de premier niveau. Dans le cas d'objets imbriqués il faudra utiliser une autre methode.
+
+***** APPLIQUEZ LA NOTION *****
+
+Notre fonction createUser() contient actuellement un bug. Pouvez-vous le corriger grâce à la méthode de shallow copy adéquate ?
+
+let userTemplate = { name: '', isAdmin: false }  
+
+function createUser(name, isAdmin) { 
+    let newUser = Array.from(userTemplate)  // contenait :  let newUser = userTemplate   
+    newUser.name = name           
+    newUser.isAdmin = isAdmin    
+
+    return newUser               
+}
+
+let user = createUser('John', false)    
+let adminUser = createUser('Jane', true)
+
+console.log(user)
+console.log(adminUser)
+
+**************** METHODE DE LA DEEP COPY *******************
+
+Pour les objets complexes a plusieurs dimensions 
+Il s'agit de creer un nouvel objet en copiant chacune de ses valeurs recursivement
+Plusieurs methodes sont possibles 
+
+exemple d'un tableau d'utilisateurs:
+
+let users = [{ name: 'Nicolas'}, { name: 'Romain' }, { name: 'Laure' }]
+let adminUsers = users.slice()
+
+users[0].name = 'Pirate'
+
+console.log(users)       // Affiche [{name: "Pirate"}, {name: "Romain"}, {name: "Laure"}]
+console.log(adminUsers)  // Affiche [{name: "Pirate"}, {name: "Romain"}, {name: "Laure"}]
+
+**On constate que malgre l'utilisation du shallow copy la modification du nom du premier utilisateru se repercute sur les valeurs des deux variables
+
+--> Pour contourner ce probleme il y a le deep copy:
+
+******Avec une fonction :
+Il est possible d'ecrire soi meme une fonction recursive permettant de copier chaque primitive d'un objet 
+
+ex:
+    const deepCopyFunction = (inObject) => {
+    let outObject, value, key
+
+    if (typeof inObject !== "object" || inObject === null) {
+      return inObject // Retourne la valeur si inObject n'est pas un objet
+    }
+
+    // Création d'un tableau ou d'un objet qui contiendra notre valeur
+    
+    outObject = Array.isArray(inObject) ? [] : {}
+
+    for (key in inObject) {
+      value = inObject[key]
+
+      // On effectue une deep-copy de tous les objets imbriqués, ainsi que des tableaux
+      outObject[key] = deepCopyFunction(value)
+    }
+
+    return outObject
+    }
+
+    t users = [{ name: 'Nicolas'}, { name: 'Romain' }, { name: 'Laure' }]
+    t adminUsers = deepCopyFunction(users)
+
+    ers[0].name = 'Pirate'
+
+    nsole.log(users) // Affiche [{name: "Pirate"}, {name: "Romain"}, {name: "Laure"}]
+    nsole.log(adminUsers) // Affiche [{name: "Nicolas"}, {name: "Romain"}, {name: "Laure"}]
+
+    ***** Avec JSON.parse() et JSON.stringify() :
+
+    Si nous n'utilisons pas de types complexes tels que des dates, des fonctions, undefined, Infinity, [NaN], des regex etc... l'appel consecutif de deux methodes permet d'effectuer une deep copy en une ligne de code nativement 
+
+    ex:
+        let users = [{ name: 'Nicolas'}, { name: 'Romain' }, { name: 'Laure' }]
+        let adminUsers = JSON.parse(JSON.stringify(users))
+
+        users[0].name = 'Pirate'
+
+        console.log(users)      // Affiche [{name: "Pirate"}, {name: "Romain"}, {name: "Laure"}]
+        console.log(adminUsers) // Affiche [{name: "Nicolas"}, {name: "Romain"}, {name: "Laure"}]
+
+***/// ATTENTION \\\***   Il est possible d'exploiter des librairies JS externes (Lodash ou RFDC par exemple)  pour proceder a une deep copy
+mais ces librairies necessitent d'etre au prealable d'etre installees depuis des utilitaires comme npm  (node package manager)   
+
+** Avec Lodash:
+c'est une librairie Js mettant a dispo des methodes pour effectuer des operations quotidiennes en Js mais qui ne sont pas supportees nativement par le langage dont la deep copy 
+ex: 
+
+import _ from 'lodash'
+
+let users = [{ name: 'Nicolas'}, { name: 'Romain' }, { name: 'Laure' }]
+let adminUsers = _.cloneDeep(users)
+
+users[0].name = 'Pirate'
+
+console.log(users) // Affiche [{name: "Pirate"}, {name: "Romain"}, {name: "Laure"}]
+console.log(adminUsers) // Affiche [{name: "Nicolas"}, {name: "Romain"}, {name: "Laure"}]
+
+** Avec RFDC   (Really fast deep clone)
+
+c'est une librairie avec une methode de deep copy tres performante. Cette methode est tres interessante lsqu'il s'agit de manipuler des objets de tres grande taille 
+
+ex:
+
+const clone = require('rfdc')()
+
+let users = [{ name: 'Nicolas'}, { name: 'Romain' }, { name: 'Laure' }]
+let adminUsers = clone(users)
+
+users[0].name = 'Pirate'
+
+console.log(users) // Affiche [{name: "Pirate"}, {name: "Romain"}, {name: "Laure"}]
+console.log(adminUsers) // Affiche [{name: "Nicolas"}, {name: "Romain"}, {name: "Laure"}]
+
+** QUELLE METHODE UTILISER? 
+
+deep copy est plus lente que shallow copy, elle doit etre utilisee que lorsque c'est absolument necessaire.
+Parmi les differentes methodes la definition d'une fonction est la plus rapide dans tous les cas de figure.
+Mais si nous voulons eviter d'en definir une la syntaxe avec JSON  peut etre une solution viable a condition que les performances en terme de rapidité ne soient pas une priorité.
+Du coté des librairies les developpeurs opteront pour la solution de Lodash car tres rependue  et est souvent deja incluse dans le projet. Parcontre si nous devons travailler avec de gros objets on va preferer travailler avec RFCD qui se revelera plus performante 
+
+****A RETENIR 
+
+la deep copy permet de contourner les limitationd de la shallow copy mais cette operation a un cout en termes de performances
+
+Plusieurs methodes s'offrent a nous que ce soit nativement  ou via l'utilisation de librairies. Il conviendra de choisir la methode qui nous conviendra le mieux tant au niveau de la lisibilité que de la performance
+
+*** VIDEO
+
+utilisation d'une fonction:
+
+let users = [{ name: 'Nicolas'}, { name: 'Romain'}, { name: 'Laure'}]
+
+let adminUsers = users.slice()      //on commence par faire une shallow copy
+
+users[0].name = 'pirate'             // on change le premier element du tableau users par 'pirate'
+
+console.log(users)               // dans les deux cas on a pirate au premier element de chaque tableau a cause de la shallow copy assignation par        
+console.log(adminUsers)             reference 
+
+le formateur a decide de pas l'ecrire dans la video car trop complexe. Il en a recuperee une sur internet! pffff
+
+*** LODASH SUR REPLIT ***
+ sur replit aller ds packages et installer lodash 
+ avec _ on accede a la librairie de lodash
+
+*************APPLIQUEZ LA NOTION **************
+
+Notre fonction createNewMenu() contient actuellement un bug. Pouvez-vous le corriger grâce à la méthode de deep copy de votre choix ?
+
+let summerMenu = [{
+  name: 'Margarita', 
+  prices: {
+    medium: 6.00,
+    large: 8.00
+  }
+}, { 
+  name: 'Jambon Fromage',
+  prices: {
+    medium: 7.00,
+    large: 9.00
+  }
+}, {
+  name: 'Mozzarella',
+  prices: {
+    medium: 6.00,
+    large: 8.00
+  }
+}]
+
+function createNewMenu(originalMenu, priceModifier) {
+  let newMenu = originalMenu
+
+  for (pizza of newMenu) {
+    pizza.prices.medium *= priceModifier
+    pizza.prices.large *= priceModifier
+  }
+
+  return newMenu
+}
+
+let winterMenu = createNewMenu(summerMenu, 1.1)
+
+console.log(summerMenu)
+console.log(winterMenu)
+
+correction:
+
+let summerMenu = [{
+  name: 'Margarita', 
+  prices: {
+    medium: 6.00,
+    large: 8.00
+  }
+}, { 
+  name: 'Jambon Fromage',
+  prices: {
+    medium: 7.00,
+    large: 9.00
+  }
+}, {
+  name: 'Mozzarella',
+  prices: {
+    medium: 6.00,
+    large: 8.00
+  }
+}]
+
+function createNewMenu(originalMenu, priceModifier) {
+  let newMenu = JSON.parse(JSON.stringify(originalMenu))
+
+  for (pizza of newMenu) {
+    pizza.prices.medium *= priceModifier
+    pizza.prices.large *= priceModifier
+  }
+
+  return newMenu
+}
+
+let winterMenu = createNewMenu(summerMenu, 1.1)
+
+console.log(summerMenu)
+console.log(winterMenu)
+
+
+///////\\\\\\\\\Autre solution, avec une fonction: (toujours la meme sur internet !)
+
+const deepCopyFunction = (inObject) => {
+  let outObject, value, key
+
+  if (typeof inObject !== "object" || inObject === null) {
+    return inObject  // Retourne la valeur si inObject n'est pas un objet
+  }
+
+  // Création d'un tableau ou d'un objet qui contiendra notre valeur
+  outObject = Array.isArray(inObject) ? [] : {}
+
+  for (key in inObject) {
+    value = inObject[key]
+
+   // On effectue une deep-copy de tous les objets imbriqués, ainsi que des tableaux
+    outObject[key] = deepCopyFunction(value)
+  }
+
+  return outObject
+}
+
+let summerMenu = [{
+  name: 'Margarita', 
+  prices: {
+    medium: 6.00,
+    large: 8.00
+  }
+}, { 
+  name: 'Jambon Fromage',
+  prices: {
+    medium: 7.00,
+    large: 9.00
+  }
+}, {
+  name: 'Mozzarella',
+  prices: {
+    medium: 6.00,
+    large: 8.00
+  }
+}]
+
+function createNewMenu(originalMenu, priceModifier) {
+  let newMenu = deepCopyFunction(originalMenu)          //il suffit ici d'appeler la fonction trouvee sur internet 
+
+  for (pizza of newMenu) {
+    pizza.prices.medium *= priceModifier
+    pizza.prices.large *= priceModifier
+  }
+
+  return newMenu
+}
+
+let winterMenu = createNewMenu(summerMenu, 1.1)
+
+console.log(summerMenu)
+console.log(winterMenu)
+
+///////////DEFI\\\\\\\\\\\
+
+Afin de corriger les bugs de notre application, il va falloir :
+
+Modifier l'assignation de la variable newChild en utilisant une shallow copy
+
+Modifier l'assignation de la variable newNumbers en utilisant une deep copy
+
+const numbers = [
+  { id: 1, letter: 'un' }, 
+  { id: 2, letter: 'deux' }, 
+  { id: 3, letter: 'trois' }, 
+  { id: 4, letter: 'quatre' }, 
+  { id: 5, letter: 'cinq' }, 
+  { id: 6, letter: 'six' }, 
+  { id: 7, letter: 'sept' }, 
+  { id: 8, letter: 'huit' }, 
+  { id: 9, letter: 'neuf' }, 
+  { id: 10, letter: 'dix' }
+]
+const children = ['Julie', 'Benjamin', 'Thomas', 'Manon', 'Anaïs']
+
+let childObject = { name: '' }
+let scores = []
+
+for (let i = 0; i < children.length; i++) {
+  let newChild = childObject
+  newChild.name = children[i]
+  console.log(`${newChild.name} dit :`)
+  
+  let count
+  for (count = 0; count < numbers.length; count++) {
+    let newNumbers = numbers
+    console.log(`- ${newNumbers.splice(count, 1)[0].letter}`)
+  }
+
+  scores.push({ child: newChild, count: count })
+}
+
+console.log('Résultat :')
+for (let score of scores) {
+  console.log(`- ${score.child.name} sait compter jusqu'à ${score.count}.`)
+}
+
+
+correction :
+
+***** Tout d'abord je mets en place la fonction qui va me permettre de faire mon deep copy:
+
+const deepCopyFunction = (inObject) => {
+  let outObject, value, key
+
+  if (typeof inObject !== "object" || inObject === null) {
+    return inObject  // Retourne la valeur si inObject n'est pas un objet
+  }
+
+  // Création d'un tableau ou d'un objet qui contiendra notre valeur
+  outObject = Array.isArray(inObject) ? [] : {}
+
+  for (key in inObject) {
+    value = inObject[key]
+
+   // On effectue une deep-copy de tous les objets imbriqués, ainsi que des tableaux
+    outObject[key] = deepCopyFunction(value)
+  }
+
+  return outObject
+}
+
+
+
+const numbers = [
+  { id: 1, letter: 'un' },
+  { id: 2, letter: 'deux' },
+  { id: 3, letter: 'trois' },
+  { id: 4, letter: 'quatre' },
+  { id: 5, letter: 'cinq' },
+  { id: 6, letter: 'six' },
+  { id: 7, letter: 'sept' },
+  { id: 8, letter: 'huit' },
+  { id: 9, letter: 'neuf' },
+  { id: 10, letter: 'dix' }
+]
+const children = ['Julie', 'Benjamin', 'Thomas', 'Manon', 'Anaïs']
+
+let childObject = { name: '' }
+let scores = []
+
+for (let i = 0; i < children.length; i++) {
+  let newChild = deepCopyFunction(childObject)          // J'utilise ma fonction ici pour copier childObject en deep copy
+  newChild.name = children[i]
+  console.log(`${newChild.name} dit :`)
+
+  let count
+  for (count = 0; count < numbers.length; count++) {
+    let newNumbers = [...numbers]                        // J'utilise ici la methode spread pou faire mon shallow copy et eviter que les numbers
+    console.log(`- ${newNumbers.splice(count, 1)[0].letter}`)   // utilises ne soient pas pris n'importe comment a cause de la modification des valeurs
+  }                                                               // des variables du fait de l'assignation par reference 
+
+  scores.push({ child: newChild, count: count })
+}
+
+console.log('Résultat :')
+for (let score of scores) {
+  console.log(`- ${score.child.name} sait compter jusqu'à ${score.count}.`)
+}
+

@@ -1,0 +1,198 @@
+ le mot cle debugger = si le devTools est ouvert, l'executeur JS fera une pause lsq il rencontera ce mot cle.
+ dans le devTools l'onglet network va nous permettre d'intercepter l'ensemble des requetes HTTP envoyees et obtenir les informations suivantes:
+  - l'url de desti    - la methode http    - le statut de la requete   - les headers de la requete et de la reponse   - la reponse   - le delai de traitement de la requete ...
+
+
+   Des extensions navigateur qui permettent de faciliter le developpement sont dispo sur les market place de chaque navigateur ex: React Developer Tools 
+
+
+video =
+on peut tester chaque fonction directement dans la console pour aller plus vite 
+on peut ecrire a la volee dans la console pour tester des trucs 
+onglet sources = permet d'afficher l'arborescence des fichies qui composent notre projet 
+outil debbuger  =  on peut mettre des points d'arret a notre code pour voir l'etat de fonctionnement a ce stade 
+onglet network = utile notament pour les requetes ajax mais pas que 
+                on peut voir que les requetes fonctionnent 
+                200 = ok      404= probleme
+
+
+**********Les etapes de resolutions des bugs**********************
+
+--> Reproduire l'erreur = il est important d'avoir un scenario de reproduction complet avec donnees -> mais il faut aller au plus simple, ne garder que les que les etapes indispensables a la reproduction. Ce scenario sera joue de nombreuses fois au cours du debogage. L'ideal ce serait de pouvoir declencher le bug d'un clic, comme avec un test unitaire.
+Si le bug n'est pas reproductible il faut trouver pourquoi:
+A t il ete corrige par une modification du programme? est il lie aux donnees ? ou est ce lie a l'environnement ? 
+Une fois le scenario defini il est important de l'etendre a d'autres donnees pour identifier les contours du bug
+
+--> Produire des hypotheses: maintenant que nous arrivons a reproduire l'erreur il est temps de formuler des hypotheses quant a sa source, le bug peut apparaitre dans trois conditions:
+     c'est la premiere fois que l'on teste le comportement en erreur
+     l'environnement du projet a change (donnees, librairies externes...)
+     l'erreur a ete introduite avec un nouveau code ajoute au projet 
+
+Pour pouvoir formuler des hypotheses correctes il faut maitriser toutes les variables qui vont etre utilisees dans la partie du projet incriminee. Pour cela il est souvent judicieux de creer des Mocks de donnees 
+
+--> executer un  diagnostic= La strategie la plus employee est le Back-tracking: il s'agit de partir de la ligne de code d'ou le bug a ete constate et de remonter les instructions jusqua trouver la source du bug
+voici les etapes du back-tracking: ++++++++++++
+    - Ajouter un point d'arret au niveau de la ligne de code en erreur
+    - Executer le code selon le scenario de reproduction du bug
+    - Arrivé au point d'arret analyser les valeurs des variables et definir laquelle provoque l'erreur 
+    - Remonter jusqu'a l'instanciation de cette valeur en erreur et y ajouter un point d'arret. Supprimer les points d'arret precedement ajoutes, pour plus de clarte.
+    - Repeter les etapes 2 a 4 jusqu'a l'origine du bug.
+
+--> Un point d'arret dans la console google chrome :
+ouvrir la console 
+la section source est divisee en trois parties:
+    a gauche se situent les fichiers du site (HTML, JS, etc...) Cliquons sur le fichier JS que l'on souhaite tester 
+    au centre se trouve le code du fichier selectionne. Les lignes du code sont numerotees. Pour placer le point d'arret, cliquons sur le numero de la ligne a tester.
+    A droite se trouve le resume du debug (nbre de points d'arret, scope, etc). Le menu scope permet de voir les valeurs des variables au moment ou le point d'arret s'execute.
+
+Conseil =  
+Bon nombre de debogueurs permettent l'affichage de la pile des appels (callstack): il peut etre utile de l'utiliser pour remonter la source de l'appel a l'instruction.
+
+si le beug  a ete introduit par une version nouvelle du code il peut etre interessant de jouer le cas de test sur une version precedente du code pour verifier si le bug n'etait pas deja present. S'il n'est pas levé essayez avec  le commit suivant, et ainsi de suite, jusqu'a identifier la modification responsable de l'erreur.
+Si l'on a pas la possibilite de placer des points d'arret (par exemple en environnement d'integration) ou en cas de bug impossible a reproduire, les logs seront nos meilleurs allies. Attention cependant, l'ajout de logs peut modifier le comportement du programme et donc influer sur le bug.
+
+Methode console.log() : 
+
+strategie de debogage tres utilisee . Elle retourne en console le resultat de la variable passee en parametre. C'est une methode tres pratique dans le cas d'un debogage au sein d'une boucle par exemple. En effet elle permet d'avoir un visuel de la liste des valeurs retournees ou affectees a chaque tour de boucle.
+
+///****/////**///***ATTENTION! 
+Il faut toujours supprimer les console.log() du code. failles de secutite car tous les utilisateurs auront acces aux donnees renvoyees par le console.log()
+
+Corriger un bug:
+
+Une fois le bug identifie reproductible et localise il faut le corriger en respectant le niveau de qualite du code sur le projet.
+Parfois par manque de temps le dev est oblige de faire une correction rapide qui ne respecte pas le niveau de qualite ou qui laisse sciemment des pans non fonctionnels. La decision ne doit pas etre prise uniquement par le developpeur mais il devra etre capable d'argumenter et de donner les limites du correctif. Ce quickfix doit etre temporaire, facilement identifiable dans le code, trace dans un gestionnaire de taches et surtout cela doit rester extremement rare.
+Dans tous les cas une fois le bug corriger n'hesitez pas a partager votre experience avec l'equipe projet. Cela contribuera a l'amelioration des processus et de la qualite du code en general.
+
+Complement =
+Le debogage est un des aspects du metier du dev les plus exigeants. il y a une attitude  a tenir pour favoriser le travail:
+* Toutes les parties du code sont potentiellement responsables de l'erreur
+* Il ne faut pas negliger les plus petites erreurs, une faute de frappe peut entrainer d'enormes problemes.
+* Avant de demarrer le debug il faut s'assurer de ne pas avoir de modifications du code en cours,
+* Il faut amenager suffisament de temps pour pouvoir se concentrer sans etre derangé.
+* Le partage d'experience est fondamental.
+
+A retenir:
+
+-La presence de bugs dans un code est inevitable. De plus, le debogage est un des aspects les plus exigeants du metier de developpeur. Il demande beaucoup de rigeur et de methode.
+
+-Mais si ces etapes sont respectees il sera toujours possible de trouver la source du probleme.
+
+//**//VIDEO :
+
+etape 1 : Reproduire le bug, refaire par exemple ce qu'a fait l'utilisateur avec le meme navigateur.
+etape 2 : former un code minimal qui va beuger. repeter ce code minimal plutot que le script entier, Isoler le probleme. 
+etape 3 : d'ou vient le probleme? est ce qu'il y a eu des modifications du code depuis? hypotheses. Effet de bord (nouveau fichier de code source avec nom de variable dedoublé)
+etape 4 : determiner le type de bug (erreur de syntaxe, pb d'architecture, maj de librairie tierce... )
+etape 5 : traquer le bug en utilisant l'onglet console. En mettant du code temporaire dans la console. On reproduire le bug avec un code minimal et placer un point d'arret.
+etape 6 : corriger le probleme.
+          
+//*********************************************************
+
+const listTemperature = {
+  month: 'January',
+  tempPerDay : [
+    {day: 1, temp: 15},
+    {day: 2, temp: 10},
+    {day: 3, temp: 14},
+    {day: 4, temp: 20},
+    {day: 5, temp: 18},
+    {day: 6, temp: 17},
+    {day: 7, temp: 15},
+    {day: 8, temp: 16},
+    {day: 9, temp: 15},
+    {day: 10, temp: 9},
+    {day: 11, temp: 10},
+    {day: 12, temp: 13},
+    {day: 13, temp: 14},
+    {day: 14, temp: 11},
+    {day: 15, temp: 12},
+    {day: 16, temp: 16},
+    {day: 17, temp: 17},
+    {day: 18, temp: 14},
+    {day: 19, temp: 15},
+    {day: 20, temp: 11},
+    {day: 21, temp: 11},
+    {day: 22, temp: 10},
+    {day: 23, temp: 19},
+    {day: 24, temp: 22},
+    {day: 25, temp: 18},
+    {day: 26, temp: 17},
+    {day: 27, temp: 16},
+    {day: 28, temp: 13},
+    {day: 29, temp: 15},
+    {day: 30, temp: 20},
+    {day: 31, temp: 22}
+  ]
+}
+
+let tableTemp;
+
+for (let counter = 0; counter < listTemperature.tempPerDay.length; counter++) {
+  if (listTemperature.tempPerDay[counter].temp > 20) {
+    tableTemp.push(listTemperature.tempPerDay[counter].temp);
+  }
+}
+
+console.log(tableTemp);
+
+*** Ici la console nous renvoie une erreur : TypeError: cannot read properties of undefined (reading 'push')
+*** En mettant un point d'arret au niveau de la ligne concernee on constate que c'est la variable tableTemp qui est undefined. En effet, nous ne l'avons pas declaré comme etant un tableau. JS ne peut donc pas appliquer la methode push() si c'est pas un tableau. Le correctif serait donc d'initialiser tableTemp comme etant un tableau []
+
+let tableTemp = [];
+
+
+
+
+//********DEFI******************
+<script>
+  // tableau de noms
+  const data = ['Paul', 'Jean', 'Marie', 'Nicolas', 'Julie', 'Lola', 'Martin', 'Armand', 'Amandine'];
+
+  // tableau de stockage de l'objet {letter: '', names: ['']}
+  const dataSorted = [];
+
+  // tri du tableau data par ordre alphabétique
+  data.sort(function(a, b) {
+    //return a - b;  l'erreur vient d'ici car ici on trie des nombres et ca ne marche pas avec des lettres 
+    return a.localeCompare(b); //  <- ceci est le correctif 
+  });
+
+  // POUR CHAQUE nom du tableau data
+  data.forEach(function(name) {
+    // On recherche s'il existe une valeur de la propriété letter égale à la premiere lettre du nom
+    // Si une des valeur de la propriété letter est égale à la premiere lettre du nom on retourne l'index sinon on retourne -1
+    const indexLetter = dataSorted.findIndex(function(objet) {
+      return name.substring(0, 1).toLocaleLowerCase() === objet.letter.toLocaleLowerCase();
+    });
+    // Si l'index est différent de -1
+    if (indexLetter !== -1) {
+      // On ajoute le nom au tableau de la propriété names correspondant à l'index de dataSorted
+      dataSorted[indexLetter].names.push(name);
+    // Sinon
+    } else {
+      // On ajoute l'objet {letter: name.substring(0, 1), names: [name]} à dataSorted
+      dataSorted.push({letter: name.substring(0, 1), names: [name]});
+    }
+
+  })
+  console.log(dataSorted)
+  </script>
+
+  le probleme est que le tableau renvoyé ne renvoie pas les donnees par ordre alphabetique, le souci vient de la methode sort() qui n'est pas employee correctement.
+
+
+  ++++++ Le code est ecrit en ES5 afin que l'on puisse plus facilement se reperer dans la documentation. Toutes fois on rencontrera souvent de la syntaxe ES6 :
+
+const data = ['Paul', 'Jean', 'Marie', 'Nicolas', 'Julie', 'Lola', 'Martin', 'Armand', 'Amandine']
+
+const dataSorted = [];
+
+data.sort((a, b) => a.localeCompare(b));
+
+data.forEach((name) => {
+  const indexLetter = dataSorted.findIndex((objet) => name.substring(0, 1).toLocaleLowerCase() === objet.letter.toLocaleLowerCase());
+  indexLetter !== -1 ? dataSorted[indexLetter].names.push(name) : dataSorted.push({letter: name.substring(0, 1), names: [name]});
+})
+
+*** Ce code est plus concis mais moins facilement debogable. Il faudra que j'apprenne les differentes syntaxes JS
