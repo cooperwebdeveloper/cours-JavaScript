@@ -1,0 +1,638 @@
+****** NOTIONS GENERALES *******
+
+qu'est ce qu'un test ? Un test permet de verifier le code afin de trouver d'eventuels bugs, des ralentissements, des cas non traités et plusieurs autres points.
+
+Il faut etre sur que l'ajout d'une fonctionnalite ou d'une application, que la correction d'un bug  ou une quelconque modification du code existant, ne creeront pas de probleme sur le code existant 
+
+les test permettent d'eviter que ce soir l'utilisateur final qui subisse les ces eventuels problemes 
+
+les tests permettent de securiser le deploiement d'une application mais aussi de ses futures mises a jour.
+Il existe plusieurs facon de faire pour la redaction de ces test:
+
+    **Avant de coder la fonction: Certains developpeurs commencent par ecrire les test avant meme de coder la partie applicative. C'est une pratique assez courante, le developpeur connaissant ce qu'il va fournir comme information et ce qu'il veut recuperer. C'est d'ailleurs le principe meme d'une pratique de developpement ---> le TDD
+
+    **Apres avoir codé la fonction: on teste ce que l'on a cree, peu importe le type de test nous recuperons notre fonction et nous testons tous les cas possibles.
+
+
+------L'automatisation des tests:
+    Le pb avec les test manuels c'est qu'ils sont lents et ne sont pas repetables. Les tests automatisés permettent de pallier a ce probleme en aillant recours aux tests automatisés.
+    Ces tests sont crees de sorte a pouvoir etre repetes a chaque fois que necessaire. Ils sont conçus pour tester plusieurs cas, faciliter l'organisation et leur ecriture et permettent d'avoir des resultats plus lisibles.
+
+    Le resultat des tests automatisés est structuréen categories et avec des noms pour chaque test.
+    Chaque test est validé 1 par 1 et le resultat de chaque est notifié pour connaitre les informations de celui qui echoue. Les outils de test automatise possedent le plus souvent un systeme pour specifier ou se trouveront les tests:
+
+        *Fichier finissant par <Nom du fichier>.test.js
+        *Fichier finissant par <Nom du fichier>.Test.js
+        *Dossier test (contentant tous les fichiers tests pour chaque fonctionnalité)
+
+
+******** LE TDD (Test Driven Development) ***********
+
+    Le TDD inverse la tendance qui etait de coder puis tester. Avec cette methodologie c'est au code de s'adapter au test et non au test de s'adapter au code. Le developpement avec cette methode se passe de la facon suivante:
+
+    - Ecriture du test en decrivant l'attendu
+    - Echec volontaire du test
+    - Ecriture de la fonctionnalite 
+    - Passage du test et correction des eventuelles erreurs
+    - Optimisation du code 
+    - Passage  a la fonctionnalité suivante en revenant au debut de notre liste.
+
+++ A chaque nouvelle fonctionnalité on teste les precedentes. Cette pratique permet d'avoir un code 100% testéet fonctionnel.
+
+**** A RETENIR ****
+
+Les tests unitaires sont un aspect primordial du travail de developpeur. Ils permettent de s'assurer du bon fonctionnement du code, quelles que soient les actions de l'utilisateur ou les donnees en entrees et sorties.
+
+ex: 
+
+const multiply = (number) => number * 2;
+console.log(multiply(2));
+
+
+//test manuel primitif:
+
+const multiplyTest = () => {
+    const result = multiply(4);
+
+    if (result === 8) {
+        return true;
+    }
+
+    return false;
+}
+
+multiplyTest() ? console.info('Test multiply ok') : console.error('Test multiply failed');
+
+
+*** exercice : 
+    - Les test manuels ne sont pas plus rapides que les tests automatises 
+    - Les avantages des test automatises sont qu'ils sont plus rapides , permettent la repetition facilement et sont mieux organisés.
+    - La pratique se basant sur l'ecriture des tests avant l'applicatif est le Test Driven Development (TDD)
+
+
+*********** LES DIFFERENTS TYPES DE TESTS *************
+
+    **** TEST UNITAIRE ****
+
+    Le test unitaire permet de tester une partie precise du code individuellement et independamment du reste de l'application.
+    Cela permet de tester la qualite du code, les erreurs et les performances d'une partie specifique du code.
+
+    Par exemple: tester un type de donnees pour un champ mail. Pour cela, nous testons les cas valides mais aussi ceux invalides.
+
+
+    exemple: 
+    Notre application comporte un formulaire de saisie d'age majeur qui verifie au cours de la saisie la validite de l'information fournie.
+    Notre test unitaire se concentrera uniquement sur la methode qui verifie la validite de l'age saisie
+
+    //Fonction test avec l’age en paramètres
+function valueAge (age) {
+//Test de l’input : Est-ce un nombre ? 
+//La fonction isNaN ( isNotaNumber ) retourne vrai si la valeur n’es pas un nombre
+if (isNaN(age)){
+		return false
+}
+//Test de l’input : Est-ce que ce nombre est supérieur à 18 ?
+if (age < 18 ){
+	return false 
+}
+return true
+} 
+function testAge (input, result) {
+if (valueAge(input) === result){
+console.log(`Test réussi pour ${input}`)
+return true
+}
+else {
+	console.log(`Test échoué pour ${input}`)
+		return false
+}
+}
+
+//On peut lancer le test avec la commande suivante :
+testAge(25, true) 
+testAge(‘nano’, false) 
+testAge(12, false) 
+//Sur les 3 tests lancés, seul 1 retournera true
+testAge(5, true) 
+//Le dernier passera comme invalide car nous lui avons marqué attendre un true
+//Cependant l’âge étant inférieur à 18, la réponse sera false.
+…
+
+
+le parametre input qui correspond a l'age de l'utilisateur sera defini dans l'ecriture du test et ne dependra pas d'une entree utilisateur.
+Le parametre result sera le resultat que l'on attend.
+La fonction que nous testons : Regarde si l'age est un bien un nombre avec le test inNaN et s'il est superieur a 18  avec <18 qui retourneront false si ce n'est pas le cas et arreteront le test si la valeur est invalide.
+
+
+**** Ecrire un test unitaire, le pattern AAA ****  METHODE 
+
+AAA (Arrange, Act, Assert) = modele utilisé principalement pour creer un test unitaire.
+Il consiste a diviser la redaction d'un test unitaire en 3 parties:
+
+1- Arrange: Initialisation des projets, definition des valeurs transmises a la methode a tester (Dans notre exemple plus haut il s'agit d'input)
+    -->  Ce que nous fournissons au code
+2- Act: Appel de la methode testee avec les parametres definis dans la section ARRANGE (ds notre exemple il s'agit des appels a valueAge, mais il aurait aussi pu faire appel a une fonction externe)
+    -->  Ce que notre code doit faire 
+3- Assert: Verification que la methode testee est conforme a ce que l'on attend (dans notre exemple testAge)
+    -->  Ce que nous attendons comme resultat et qui nous renverra si c'est similaire ou non
+
+
+
+***** TESTS FONCTIONNELS  *****
+
+Un test fonctionnel permet de comparer la conformité  de l'application avec les besoins initiaux.
+
+Ce test contrairement aux test unitaire permet de traiter une partie plus importante de code.
+
+Cela permet de tester la qualité fonctionnelle de notre code.
+
+Par exemple: si nous reprenons notre exemple de l'input de champ mail, dans ce cas du test fonctionnel il pourrait etre realisé sur la redaction de code lors de l'envoi du formulaire.
+    ->En cas de donnees non valides que se passe t il?
+    ->Les informations sont-elles bien enregistrees en base de donnes?
+
+
+exemple:
+
+Imaginons une application qui comporte un formulaire de saisie d'âge permettant de tester la majorité de l'utilisateur. Cette application devra retourner le nombre d'années avant la majorité américaine (25 ans) - par exemple dans le cadre d'un site sur les différences américano-françaises.
+
+Notre test fonctionnel testera ce qui se passe après l'envoi de l'âge par l'utilisateur via un bouton calculer.
+
+//Notre fonction de base qui se lance au click sur le bouton
+//L’input représente la valeur de l’âge utilisateur
+function calculAge (input){
+    if (isNaN(input) || input<18){
+        return false
+    }
+    if (input > 25) {
+    return `Vous êtes majeur et prêt pour l’Américan Dream`
+    }
+    else if (input < 25){
+        return `Il vous reste ${25 - input} ans avant d’être majeur aux USA`
+    }
+}
+// Fonction test avec notre valeur en 1er paramètre et notre résultat attendu en 2nd
+function testSubmit (input, result) {
+    let test = calculAge(input)
+    if (test === result){
+        console.log `Le test a réussi pour ${input}`
+    }
+    else {
+        console.log `Le test a échoué pour ${input}`
+    }
+}
+
+//Nous lançons notre test avec notre valeur en 1er paramètre et notre résultat attendu en 2nd
+testSubmit(18, false)
+testSubmit(25, `Vous êtes majeur et prêt pour l’Américan Dream`)
+testSubmit(24, `Il vous reste 1 ans avant d’être majeur aux USA`)
+…
+
+//Affiche : 
+Le test a échoué pour 18
+Le test a échoué pour 25
+Le test a réussi pour 24
+
+Prenons les resultats un par un: 
+
+    -> Le premier est un echec volontaire nous fournissons un resultat false mais la logique voudrait que le resultat soit "Il vous reste 7 ans avant d'etre majeur en Amerique" le test renvoie donc un echec.
+
+    -> Le second est un echec involontaire: Nous avons fourni un input et un resultat qui devraient concorder seulement le test fini est en echec.
+        Si on regarde attentivement on se rend compte que le cas ou l'input est egal a 25 n'est pas géré par notre fonction (dans notre exemple, le test unitaire n'aurait pas pu nous signaler cette erreur)
+
+    -> Le dernier test est un test reussi: l'input donne correspond bien au resultat attendu.
+
+    Ce test nous aura permis de trouver une erreur dans notre fonctionnement (un oubli dans la gestion des conditions)
+
+    Partons du principe que la fonction calculAge est la fontion appelée à chaque onClick et celle-ci doit renvoyer le message final.
+
+Nous créons donc une fonction qui va tester si le résultat de cette fonction calculAge correspond bien à celui attendu.
+
+Dans le cas présent, un échec ne veut pas dire que la donnée est mauvaise, mais que le résultat n'est pas celui attendu par rapport à un fonctionnement souhaité.
+
+
+****** LES AUTRES TYPES DE TESTS ******
+
+les test d'INTEGRATION permettent de tester l'integration des differents modules dans leur environnement final cela permet de voir des pb d'interface par exemple entre 2 modules ( ex l'utilisateur rentre un age et celui ci declenche t il bien la fonction qui suit)
+
+les TEST DE NON-REGRESSION: permettent de tester l'integrite des fonctions existant lors d'ajout de fonctionnalites (ex l'ajout d'un bouton qui cree un dysfonctionnement dans une fonction du a son nom deja utilisé)
+
+les TESTS E2E (end to end): sont des tests d l'application de bout en bout xex: 
+    - l'utilisateur rentre sur la fiche age
+        l'input s'Affiche   
+        l'utilisateur rentre son age
+    - l'utilisateur valide avec le bouton calcul
+        la fonction calcule et affiche le result
+
+le SANITY TESTING (test smoke): est un test unitaire ou fonctionnel d'une fonctionnalite critique, si ce test echoue, les autres test ne sont pas utiles.
+        ex: sur notre exemple End to End :" Est ce que l'input s'affiche bien?"
+
+
+***** SCHEMA  DE  TEST *****
+
+    Comme nous avons pu le constater, il existe un nombre considerable de types de tests (et nous les avons pas tous cités).
+    Ils ne sont ps tous lances de maniere aleatoire, une schematisation de leur fonctionnement pourrait ressembler a l'exemple ci-dessous:
+
+    Test Smoke --> Test Unitaire --> Test Integration --> Test fonctionnel --> Test End-to-End --> Test Non-REGRESSION
+
+
+****** A RETENIR ******
+
+* Les tests unitaires sont un aspect primordial du travail de developpeur. Ils permettent de s'assurer du bon fonctionnement du code, qu'elles que soient les actions de l'utilisateur ou les donnees en entrees et sorties 
+
+* Les tests fonctionnels, tout aussi importants que les tests unitaires, testent quant a eux le bon fonctionnement de la logique et des fonctions
+
+* Il existe de nombreux tests permettant de controler la viabilite du code de l'application et de minimiser au maximum les erreurs
+
+****** VIDEO *******
+les test fonctionnels sont un peu plus etendus que les tests unitaires, ils permettent de tester une fonctionnalite dans son ensemble.
+
+--> Pour faire un test fonctionnel:
+On cree une fonction test qui va tester notre fonctionnalite (qui est aussi une ou plusieurs fonctions) avec differents parametres pouvant constituer une erreur  et avec des parametres qui sont sensés retourner le resultat correct attendu. Cette fonction test va nous renvoyer des messages via le console.log() qu'on aura defini pour nous dire si le resultat est ok ou pas 
+
+--> les test end to end sont une version evoluee des test fonctionnels. il va tester de bout en bout l'application sur un navigateur web un peu specifique sur le quel on va programmer nos tests avec des commandes. ex scroller, clicker etc il simule les actions qu'un utilisateur pourrait realiser.
+
+////////////////////////////////////////////////////////////\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+
+********* Node Js et NPM ******8
+
+Node.js est un environnement d'execution basé sur le moteur javascript V8 de chrome.
+Node.js permet entre autres d'executer du javascript cote serveur
+Ce qui permet notamment d'executer du code JS sans navigateur
+Fourni avec l'outil NPM, ce dernier permet d'obtenir des outils de test performants et automatises pour javascript.
+
+version actuelle de node.js ---> v18.8.0 
+
+NPM => avec node.js vient un outil tres pratique = NPM qui nous permet de gerer des packages node et de les executer. C'est grace a ces outils que nous allons pouvoir installer et utiliser un Framework de test.
+
+NPM est le gestionnaire de paquets officiel de node.js
+
+PAQUET: (package) : Un paquet est un ensemble de fonctions utilitaires regroupees et mises a dispo pour pouvoir etre reutilisees ou executees sans avoir a reecrire le code.
+Chaque paquet a un numero de version permettant de garantir la coherence dans leur utilisation.
+
+GESTIONNAIRE DE PAQUETS : c'est un outil qui va permettre de telecharger, de mettre a jour et de supprimer des paquets referencés dans une application et de gerer leurs dependances.
+Si le  paquet A reference le paquet B et que notre application reference le paquet A, alors NPM telechargera le paquet A et le paquet B 
+NPM etant le gestionnaire de paquets officiel de Node.js, il est compris dans l'installation de Node.js
+
+Pour tester la bonne installation de l'executable NPM on peut executer la commande suivante dans la console: npm --version
+On peut egalement tester la version de Node.js avec la commande: node --version
+
+/// COMMANDES \\\ : Node possede une commande utile et indispensable: 
+
+    --> Node <nom du fichier>.js    => Permet de lancer le fichier js ac le moteur de node.js. Le fichier js se lance alors sans navigateur (attention!!! Cela signifie que les console.log() vont s'afficher dans notre terminal)
+
+////\\\\
+NPM possede de nombreuses fonctions qui s'utilisent comme ceci :
+    npm <nom de la commande>
+
+    ex: 
+
+    *****  init **** permet d'initialiser un projet node.js, cette fonction cree un fichier package.json qui stockera les informations necessaires au  bon fonctionnement de node.js  .   Cette commande demandera malgre tout de nombreuses informations pour creer un fichier package.json personnalisé.
+    ELLE EST NECESSAIRE A CHAQUE NOUVEAU PROJET UTILISANT node.js     --->  npm init
+
+    ***** install <nom du package> ***** Permet d'installer un package dans sa derniere version grace a son nom.  
+    exemple: nous pouvons installer un paquet test nommé: cowsay   --> La commande complete sera : npm install cowsay
+
+    ***** uninstall <nom du package> ****** Permet de desinstaller un package grace a son nom. Son fonctionnement est similaire  a install.
+
+    ***** update <nom du package> ***** Permet de mettre a jour le package noté, son fonctionnement est similaire a install : npm update cowsay
+
+
+//// LES FLAGS \\\\ Ce sont des parametres que nous allons pouvoir ajouter a ces commandes pour ameliorer leur comportement
+
+3 flags en particulier nous seront utiles:
+
+*** --save-dev *** permet de notifier que le package installe sera uniquement necessaire pendant le developpement cela evite d'avoir le module en question pendant l'etape de production (deploiement pour les utilisateurs finaux) quand le projet en possede une 
+exemple: npm install cowsay -save-dev 
+
+*** -g *** pour global, permet lors de l'installation d'un package ou de sa desinstallation de le faire de facon globale
+Le package sera donc installé sur la machine contrairement a  une installation standard  qui l'installera dans votre projet uniquement 
+exemple: npm install cosway -g 
+
+*** -y *** permet lors d'un npm init, de specifier que vous souhaitez une creation rapide de projet 
+exemple: npm init -y
+
+_________ UTILISATION BASIQUE DE NPM ______
+
+Pour gerer les differentes versions des paquets dans une application NPM se base sur le fichier package.json present a la base du projet 
+(ça fonctionne comme git init)
+
+Si aucun fichier package.json n'existe, il faut creer en initialisant le projet node avec npm init. Il suffit ensuite de remplir la description du projet dans la console.
+
+Si nous n'avons pas besoin de personnaliser les informations de notre projet node.js nous pouvons utiliser directement la commande npm -y, cette commande permet de laisser les valeurs par defaut.
+
+Par la suite pour ajouter un paquet a notre projet il faudra demander a npm de le telecharger et de l'installer avec la commande npm install <nom du paquet> 
+
+Les paquets seront ajoutes au dossier node-modules dans le dossier du projet et les informations du paquet seront ajoutees dans le fichier package.json
+La methode avec le flag -y est plus rapide mais on ne pourra pas personnaliser le nom, la version, la description, les mots-cles, l'auteur et la licence.
+Cependant si nous avons besoin de modifier ces informations plus tard, nous pourrons modifier le fichier package. json plus tard.
+
+********* exemple **********
+
+Nous allons creer un projet pour tester le package cite plus haut en exemple (cowsay, qui permet d'afficher une vache en textuel et un message)
+
+Pour commencer, il nous faut un dossier pour accueillir notre projet, nous le creons et nous nous positionons dedans.
+
+Nous initialiserons notre package.json avec npm init (pour ce projet nous utiliserons le flag -y car une configuration par defaut est suffisante pour un projet test)
+
+cmd > mkdir cowProject
+cmd > cd cowProject
+cmd > npm init -y
+Wrote to . /cowProject/package.json:
+
+{
+  "name": "cowproject",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
+
+
+Ensuite nous installerons notre package:
+
+cmd > npm install cowsay
+added 41 packages, and audited 42 packages in 2s
+
+3 packages are looking for funding
+  run `npm fund` for details
+
+4 moderate severity vulnerabilities
+
+To address all issues (including breaking changes), run:
+  npm audit fix --force
+
+Run `npm audit` for details.
+…
+
+Notre package est maintenant installe et pret a etre utilise. Nous allons creer un fichier index.js qui contiendra notre code pour le runtime node.Js
+
+const cowsay = require('cowsay') //on importe cosway
+const message = cowsay.say({ text: 'Notre premier test de NPM' }) On cree une variable message et appelle la fonction say de notre module 
+console.log(message)
+…
+
+Explications du code: 
+
+    - La premiere ligne constitue notre import de cosway.
+        On remarque qu'on ne specifie pas de chemin dans le require, uniquement le nom du module.
+        Par defaut node ira chercher le module dans le dossier node_modules.
+    - La seconde ligne de code cree une variable message et appelle la fonction say de notre module en lui passant le message Notre premier test de npm en parametre
+    - Enfin nous logons en console le resultat.
+
+Nous allons lancer notre projet avec: 
+
+cmd > node index.js //ce que le formateur avait tapé dans sa console pour afficher les console.log() sur VSC
+
+… // Le resultat est une vache qui parle et le message que l'on a tapé s'inscrit dans la bulle au dessus de la vache.
+
+jusqu'a maintenant notre code js avait besoin d'un navigateur pour fonctionner car c'est un langage de base client-side.
+Or avec ce test nous l'avons fait tourner uniquement en ligne de commande sans navigateur.
+C'est ce que nous propose node.js, un environnement Javascript utilisable sans navigateur pour une utilisation client comme server-side.
+
+//// A RETENIR \\\\
+
+- Node est une plateforme d'execution (runtime) qui permet d'executer du javascript sans passer par le navigateur.
+- Il est fourni avec son gestionnaire de paquets NPM qui permet de telecharger des paquets choisis dans la plus grande collection open source du monde et de gerer leurs versions.
+- Grace a node, Javascript n'est plus limité au client-side mais peut realiser du server-side.
+
+
+*************************** LES OUTILS DE TEST JAVASCRIPT *********************
+
+********  MOCHA ********
+
+Il est un des outils de test les plus performants. Il  existe aussi jest qui est nativement utilisé avec la bibliotheque REACT. 
+Une bibliotheque Javascript permettra de creer des interfaces utilisateurs dynamiques.
+
+MOCHA est un framework de test Javascript. C'est un outil simple, extensible et rapide qui peut etre utilise pour ecrire des tests unitaires ou d'integration.
+
+Il existe deux solutions pour son installation:
+    - npm install --save-dev mocha  : on pourra installer mocha en dependances de developpement sur notre projet, npm l'ignorera alors en mode 'Production'
+    - npm install -g mocha  : nous pouvons l'installer en global, mocha alors ne sera pas specifique a notre projet mais bel et bien installé sur notre machine.
+(ATTENTION: Cela implique que nous devrons nous memes le mettre a jour avec la commande npm update -g mocha  car sinon la dependance locale stagnera a sa premiere version d'installation)
+
+Pour cet exemple nous allons installer mocha en dependance de developpement dans notre projet cowProject cela permettra de voir la reaction du fichier package.json
+
+cmd> npm install --save-dev mocha
+
+Si nous regardons le fichier package.json nous pouvons voir que la dependance mocha est dissociee des autres modules. Les dependances de production et les dependances specifiques au developpement sont separees.
+
+DONC: le fichier package.json permet aussi de voir comment sont organises nos packages.
+
+Pour la suite nous installerons mocha en global (avec npm install -g mocha) pour plus de facilité
+
+//// IMPORTANT \\\\\ la commande d'appel a mocha etant simplement mocha pour une installation globale et /node_modules/.bin/mocha pour une installation sur le projet. 
+
+******** FONCTIONNEMENT DE MOCHA ************
+
+Mocha possede plusieurs interfaces definissant la methodologie d'ecriture de nos tests, les deux les plus repandues etant:
+
+    - TDD : une interface pensee pour la methodologie de test avant l'applicatif
+    - BDD : la plus repandue
+
+Nous allons nous baser sur l'interface BDD qui va nous apporter les fonctions describe, context, it, specify, et d'autres.
+
+Nous allons expliquer ces 4 premieres fonctions et les voir en action dans notre exemple.
+
+Pour cela nous importerons un module contenant notre code de test de valeur pour l'input sur la majotité et nous realiserons nos test dessus.
+
+--------- REMARQUE: 
+    Nous n'avons pas encore abordé le concept de l'export-import de modules!
+    Au dela des commandes de node et de npm dans l'invite de commande, node.js apporte son lot de fonctionnalités pour rendre javascript plus performant et plaisant. 
+    L'export de modules en est une bonne representation, cette derniere permet de mettre une partie de notre code dans un fichier JS et de l'exporter de ce dernier (avec le mot clé export).
+
+    Nous pouvons alors exporter une seule variable (ou fonction) et faire d'elle LE module de notre fichier module.exports = <Variable ou Function>.
+    
+    Ou en exporter plusieurs en les encapsulant dans un objet JS avec:
+
+    module.exports = {
+    variable1,
+    function,
+    Variable2
+    }
+
+    --> Ensuite nous pourrons les importer comme des modules node, a la difference que nous devrons specifier le chemin:
+        Par exemple: testValueAge from './function/testValueAge.JS'
+
+********** Preparation et conception d'un test avec mocha:
+
+Pour pouvoir realiser notre test nous allons creer un projet avec npm init dans un nouveau dossier, puis un dossier test a la racine de notre projet.
+Par defaut, mocha recherche ce dossier comme base de tests.
+Nous creerons aussi un fichier testValueAge.js que nous mettrons a la racine et qui possedera le code suivant:
+
+function testValueAge (input) { 
+if (isNaN(input)){
+		return true
+}
+if (input < 18 ){
+	return false 
+}
+return true
+}
+module.exports = testValueAge
+…
+
+Nous creerons enfin un fichier  testValueAgeMTest.js dans le dossier contenant le code suivant:
+
+const testValueAge = require('../testValueAge.js') 
+const assert = require(`assert`)
+
+describe(`test de Value de l’input âge`, function(){
+    it(`devrait tester la valeur si majeur`, function(){
+        assert.equal(testValueAge(20), true)
+        assert.equal(testValueAge(50), true)
+        assert.equal(testValueAge(44), true)
+    })
+    it(`devrait tester la valeur si mineur`, function(){
+        assert.equal(testValueAge(12), false)
+        assert.equal(testValueAge(8), false)
+    })
+    it(`devrait tester la valeur si chaine de caractère`, function(){
+        assert.equal(testValueAge('Hello World'), false, 'échoue car nous avons une erreur dans testValueAge')
+    })
+})
+…
+
+Lecture de notre code:
+
+1- L'importde notre fonction avec require('../testValueAge.js') nous permettra de l'utiliser pour nos tests.
+De plus si jamais nous modifions la fonction dans son fichier d'origine et que nous relancons les tests, la nouvelle version du code sera testee car exportee dans le fichier test.
+
+2- L'import du module assert:   assert est un module qui nous permettra de verifier que le resultat correspond a nos attentes.
+De base mocha ne possede aucune dependance d'assert, nous utiliserons donc celle fournie avec node.js 
+
+3- La fonction describe: Elle permet de creer une categorie, un contexte pour nos tests. Elle prend deux parametres : le nom de la categorie et la fonction qui contiendra les tests.
+
+4- La fonction it : Elle definit le test it= ça
+si nous resumons cette ligne de notre test, elle equivaudrait a nous dire: " ça devrait tester la valeur si majeur"
+Comme describe, elle prend deux parametres : son nom et la fontion qui contiendra ses tests
+
+5- La fonction assert.equal : Cette fonction prend deux parametres (et un en option), c'est elle qui va faire le gros du travail, elle va verifier que la valeur obtenue dans le premier parametre soit bien egale a la valeur attendue (que nous specifierons dans le deuxieme parametre)
+le troisieme parametre optionnel permet de creer un message d'erreur specifique 
+
+La suite du code n'est que la repetition de ces actions.
+ Si nous executons la commande mocha (dans le cas d'une installation globale de mocha) 
+ Si non installer mocha avec npm install --save-dev mocha et lancer la commade ./node_modules/.bin/mocha
+
+Nous pouvons alors voir que deux test passent mais pas le troisieme 
+Celui concernant le cas d'un autre type qu'un number comme input.
+Si nous regardons notre code testValueAge.js nous pouvons rapidement detecter l'erreur:
+
+if (isNaN(input)){
+		return true
+}
+…
+
+cette condition devrait retourner false car cela ne nous convient pas si l'input n'est pas un nombre 
+
+En modifiant cela nous obtiendrons un meilleur resultat
+
+
+-------------- Le cas de context, specify et d'autres fonctions 
+
+context et specify sont des alias pour describe et it, nous pouvons donc les utiliser pour les remplacer.
+Il existe neanmoins 2 autres fonctions interessantes: 
+
+    - before() qui se place avant tout it, cette fonction permet de lancer n'importe quelle action avant le lancement de tests.
+
+    - after() cette fonction permet comme before() de lancer n'importe quelle action mais apres les tests
+
+--------------Methode : Les fonctions de assert
+
+assert est fourni par node.js, il offre plus que la simple fonction equal citee plus haut.
+Voici une liste de quelques fonctions utiles et fonctionnant sous le meme principe que equal:
+
+    - assert.match permet de verifier une valeur avec un resultat attendu sous forme de REGEX (ex: assert.match('Je fonctionne bien',/fonctionne/))
+    - assert.notEqual : inverse a equal, il verifiera que les valeurs donnee et attendues ne soient pas egales
+    - assert.doesNotMatch inverse a match il verifiera que la valeur donnee ne corresponde pas a la REGEX  attendues
+    - assert.ifError ne prend pas qu'un parametre representant la variable d'erreur, attendra la presence d'une erreur, tant que sa valeur n'est pas   null le test passera.
+
+
+//////////  LES AUTRES FRAMEWORK DE TESTS \\\\\\\\\\\\\
+
+Jest ou jasmine sont des frameworks de tests concurrents de mocha. Ils s'utilisent de facon tres similaire a la difference que jest et jasmine se revendiquent comme de framework complets c a d que le developpeur n'aura pas besoin d'ajouter des paquets externes (pas d'import d'assert dans le cas present, jest et jasmine possedent leur propre fonction assert)
+
+Lequel choisir ? comme toujours cela va dependre de nos besoins precis sur le projet. si c'est un gros projet qui necessite d'avoir un outil parfaitement adaptable a chaque cas de figure, Mocha sera probablement le plus adapté
+
+si au contraire le projet est de taille plus petite, Jest ou Jasmine eviteront une importanter phase de configuration de l'outil test. Malgre tout cela depend aussi comme pour les langages de l'affinité du developpeur avec son outil.
+
+\\\\\\\\\\ A RETENIR \\\\\\\\\\\\\\
+ 
+. Le tres riche ecosysteme de Javascript nous offre plusieurs paquets  aboutis pour ecrire et lancer des test unitaires d'integration ou fonctionnels 
+. Ces outils devront etre choisis par le developpeur au demarrage du projet en fonction des besoins a venir
+. Mocha permet de faire un premier pas dans les tests via node.js
+. Le module assert fourni par node.js possede plusieurs fonctions permettant de comparer notre resultat avec notre attendu
+
+
+//// VIDEO : 
+
+utilisation de mocha: tester des tableaux
+- Installation en local avec npm
+- creer un dossier test a la racine du projet 
+- a l'interieur de ce dossier on  va creer un fichier test.js
+- dans ce fichier test.js on va creer une nouvelle constante que l'on va appeller assert:
+    const assert = require('assert');    // on importe une partie de mocha
+    describe('Array', function(){
+        describe('IndexOf', function(){
+            it('should return -1 when the value is not present', function(){
+                assert.equal([1, 2, 3].indexOf(4), -1); // dans le tableau [1,2,3] on va chercher l'index du chiffre 4 et s'il n'existe pas renvoyer -1
+
+            }) 
+        })
+    })
+
+
+- on va ensuite ouvrir la console et taper:
+./node_modules/mocha/bin/mocha pour ne pas avoir a taper tout ça nous pouvons aller dans le fichier package.json et y taper un script pour creer un raccourci : au niveau de 
+"scripts":{
+    "test": "mocha" //effacer le contenu et mettre cela a la place
+}
+du coup maintenant quand on tape npm test dans le terminal, node va executer mocha comme si on avait tapé ./node_modules/mocha/bin/mocha
+
+mocha va s'execute et va trouver un test 
+il va nous marquer passing car ici le test nous renvoie bien -1 
+mocha va automatiquement chercher des test dans le dossier test de mon application c 'est pour ca qu'il doit imperativement se nommer test 
+
+
+
+******************** DEFI ***************************
+
+On vous demande d'implémenter des tests unitaires sur une fonction de calcul de promotion. Cette dernière prend en paramètre le prix de base et le pourcentage de promotion. Elle retourne ensuite un Number avec le nouveau prix (sauf dans le cas d'une erreur de valeur).
+
+function promo (price, percent) { 
+    if (isNaN(price) || isNaN(percent)) {
+        return false
+    }
+    if (price == 0 || percent == 0) {
+        return price
+    }
+    return price -(percent/100*price)
+}
+    module.exports = promo
+
+
+
+Implémentez trois tests unitaires sur la fonction promo().
+
+Pour réaliser cet exercice, vous devrez partir du dossier créé :
+
+1.Créez deux fichiers : promo.js dans lequel vous copierez le code ci-dessus, et dans un dossier test promoTest.js dans lequel vous écrirez vos tests unitaires.
+
+2.Installez mocha (s'il n'est pas déjà installé en global).
+
+3.Premier test : lorsque le prix est de 0€ et le pourcentage de promotion est de 10%.
+
+4.Deuxième test : lorsque le prix est entre 30€ et 50€, et le pourcentage de promotion est de 15%
+
+5.Troisième test : lorsque l'une des 2 valeurs n'est pas un nombre.
+
+6.Lancez le test
+
+Indice
+Organisez votre code grâce au fonction it et describe, cela facilitera vos recherches en cas d'échec de test.
+
+La valeur attendue doit correspondre à la valeur réponse en Number, sauf dans le cas d'une exception, vous pouvez donc décrire un autre test pour le 3ème.
